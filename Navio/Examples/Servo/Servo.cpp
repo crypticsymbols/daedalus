@@ -28,7 +28,7 @@ extern "C" {
         PCA9685 pwm;
 
         pwm.initialize();
-        pwm.setFrequency(50);
+        pwm.setFrequency(500);
 
             pwm.setPWMmS(MOTOR_1, ms_1);
             pwm.setPWMmS(MOTOR_2, ms_2);
