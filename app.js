@@ -3,11 +3,11 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var HTTP_PORT = 8080;
 
-try{
+// try{
   var motorControl = require('./lib/motors');
-} catch (e) {
-  console.log("can't load motor drivers, you must be in dev env")
-}
+// } catch (e) {
+//   console.log("can't load motor drivers, you must be in dev env")
+// }
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/static/index.html');
@@ -26,11 +26,11 @@ var mapControls = function(inputs){
     rear: throttle * (inputs.rear * 2) / 1000
   }
   // console.log(throttles);
-  try {
+  // try {
     motorControl.setThrottle(throttles.left, throttles.right, throttles.forward, throttles.rear);
-  } catch (e){
-    console.log(throttles);
-  }
+  // } catch (e){
+  //   console.log(throttles);
+  // }
 }
 
 io.on('connection', function (socket) {
