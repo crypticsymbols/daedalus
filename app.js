@@ -14,18 +14,18 @@ app.get('/', function (req, res) {
 });
 
 var maxThrottle = 2000;
-var minThrottle = 1350;
+var minThrottle = 1300;
 
 var mapControls = function(inputs){
   var throttle = ((maxThrottle - minThrottle) * (inputs.throttle / 100)) + minThrottle;
-  // console.log(inputs);
+  console.log(inputs);
   var throttles = {
-    left: throttle * (inputs.left * 2) / 1000,
-    right: throttle * (inputs.right * 2) / 1000,
-    forward: throttle * (inputs.front * 2) / 1000,
-    rear: throttle * (inputs.rear * 2) / 1000
+    left: throttle * inputs.x,
+    right: throttle * (1 / inputs.x),
+    forward: throttle * inputs.y,
+    rear: throttle * (1 / inputs.y)
   }
-  // // console.log(throttles);
+
   try {
     motorControl.setThrottle(throttles.left, throttles.right, throttles.forward, throttles.rear);
   } catch (e){

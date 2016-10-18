@@ -12,10 +12,8 @@
     });
 
     var controlState = {
-      left: 0,
-      right: 0,
-      front: 0,
-      rear: 0,
+      x: 0,
+      y: 0,
       throttle: 0
     }
 
@@ -31,10 +29,12 @@
     document.onmousemove = function(e){
         cursorX = e.pageX;
         cursorY = e.pageY;
-        controlState.left = (cursorX) / window.innerWidth;
-        controlState.right = (window.innerWidth - cursorX) / window.innerWidth;
-        controlState.front = (cursorY) / window.innerHeight;
-        controlState.rear = (window.innerHeight - cursorY) / window.innerHeight;
+        // 
+        // GET IN THE CHOPPAH
+        // 
+        controlState.x = (cursorX / (window.innerWidth / 2) + 9) / 10;
+        controlState.y = (cursorY / (window.innerHeight / 2) + 9) / 10;
+        console.log(controlState);
         sendState();
     }
 
