@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+
+    var socket = io.connect('http://localhost:8080');
+
+    socket.on('flightData', function (data) {
+      console.log(data);
+    });
+
+    var controlState = {
+      left: 0,
+      right: 0,
+      front: 0,
+      rear: 0,
+      throttle: 0
+    }
+
+    document.onkeydown = function(e){
+      if (e.key == 'q'){
+        controlState.throttle += 1;
+      } else if (e.key == 'a'){
+        controlState.throttle -= 1;
+      }
+      sendState();
+    }
+
+    document.onmousemove = function(e){
+        cursorX = e.pageX;
+        cursorY = e.pageY;
+        controlState.left = (cursorX) / window.innerWidth;
+        controlState.right = (window.innerWidth - cursorX) / window.innerWidth;
+        controlState.front = (cursorY) / window.innerHeight;
+        controlState.rear = (window.innerHeight - cursorY) / window.innerHeight;
+        sendState();
+    }
+
+    function sendState(){
+      socket.emit('flightCommand', { 
+        name: 'controlState',
+        values: controlState
+      });
+    }
+
+  </script>
+</head>
+<body>
+
+<img src="http://10.0.1.8:8080/stream/video.mjpeg" alt="image">
+
+</body>
+</html>
