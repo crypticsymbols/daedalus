@@ -20,10 +20,10 @@ var mapControls = function(inputs){
   var throttle = ((maxThrottle - minThrottle) * (inputs.throttle / 100)) + minThrottle;
   console.log(inputs);
   var throttles = {
-    left: throttle * inputs.x,
-    right: throttle * (1 / inputs.x),
-    forward: throttle * inputs.y,
-    rear: throttle * (1 / inputs.y)
+    left: (throttle * inputs.x) / 1000,
+    right: (throttle * (1 / inputs.x)) / 1000,
+    forward: (throttle * inputs.y) / 1000,
+    rear: (throttle * (1 / inputs.y)) / 1000
   }
 
   try {
