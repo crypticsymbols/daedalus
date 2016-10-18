@@ -3,19 +3,32 @@
 <head>
   <title></title>
   <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <input type="checkbox" id="calibrationMode" onClick='toggleCalibration()'>
+  <button onclick='sendCalibration("low")'>Calibrate LOW</button>
+  <button onclick='sendCalibration("high")'>Calibrate HIGH</button>
+  <img src="http://10.0.1.8:8080/stream/video.mjpeg" alt="image">
   <script>
 
     var socket = io.connect();
 
-    socket.on('flightData', function (data) {
-      console.log(data);
-    });
+    // socket.on('flightData', function (data) {
+    //   console.log(data);
+    // });
 
     var controlState = {
       x: 0,
       y: 0,
       throttle: 0
     }
+
+    var calibrationMode = true;
+    function toggleCalibration(){
+      calibrationMode = !calibrationMode;
+      document.getElementById('calibrationMode').checked = calibrationMode;
+    }
+    document.getElementById('calibrationMode').checked = calibrationMode;
 
     document.onkeydown = function(e){
       if (e.key == 'q'){
@@ -26,16 +39,28 @@
       sendState();
     }
 
+    function sendCalibration(mode){
+      socket.emit('calibrationCommand', {
+        mode: mode
+      })
+    }
+
     document.onmousemove = function(e){
-        cursorX = e.pageX;
-        cursorY = e.pageY;
-        // 
-        // GET IN THE CHOPPAH
-        // 
-        controlState.x = (cursorX / (window.innerWidth / 2) + 9) / 10;
-        controlState.y = (cursorY / (window.innerHeight / 2) + 9) / 10;
-        console.log(controlState);
-        sendState();
+      if (!calibrationMode){
+        translateControlsToState();
+      }
+    }
+
+    function translateControlsToState(){
+      cursorX = e.pageX;
+      cursorY = e.pageY;
+      // 
+      // GET IN THE CHOPPAH
+      // 
+      controlState.x = (cursorX / (window.innerWidth / 2) + 9) / 10;
+      controlState.y = (cursorY / (window.innerHeight / 2) + 9) / 10;
+      // console.log(controlState);
+      sendState();
     }
 
     function sendState(){
@@ -46,10 +71,5 @@
     }
 
   </script>
-</head>
-<body>
-
-<img src="http://10.0.1.8:8080/stream/video.mjpeg" alt="image">
-
 </body>
 </html>
