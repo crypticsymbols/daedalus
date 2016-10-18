@@ -1,0 +1,23 @@
+{
+  "name": "daedalus",
+  "version": "1.0.0",
+  "description": "fly-by-node",
+  "main": "index.js",
+  "dependencies": {
+    "ffi": "^2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crypticsymbols/daedalus.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crypticsymbols/daedalus/issues"
+  },
+  "homepage": "https://github.com/crypticsymbols/daedalus#readme"
+}
