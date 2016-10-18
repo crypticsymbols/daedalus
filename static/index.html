@@ -48,11 +48,11 @@
 
     document.onmousemove = function(e){
       if (!calibrationMode){
-        translateControlsToState();
+        translateControlsToState(e);
       }
     }
 
-    function translateControlsToState(){
+    function translateControlsToState(e){
       cursorX = e.pageX;
       cursorY = e.pageY;
       // 
