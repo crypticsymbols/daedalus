@@ -2,6 +2,7 @@
 #define MOTOR_2 4
 #define MOTOR_3 5
 #define MOTOR_4 6
+#define FREQUENCY 300
 
 #include <Navio/gpio.h>
 #include "Navio/PCA9685.h"
@@ -28,7 +29,7 @@ extern "C" {
         PCA9685 pwm;
 
         pwm.initialize();
-        pwm.setFrequency(500);
+        pwm.setFrequency(FREQUENCY);
 
             pwm.setPWMmS(MOTOR_1, ms_1);
             pwm.setPWMmS(MOTOR_2, ms_2);
