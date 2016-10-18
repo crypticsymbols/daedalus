@@ -14,6 +14,7 @@ app.get('/', function (req, res) {
 });
 
 var maxThrottle = 1900.0;
+var midThrottle = 1500.0;
 var minThrottle = 1100.0;
 
 var mapControls = function(inputs){
@@ -44,6 +45,10 @@ io.on('connection', function (socket) {
     var value;
     if (data.mode == 'high'){
       value = maxThrottle / 1000;
+      console.log('Sending motor control value of '+ value)
+      motorControl.setThrottle(value, value, value, value);
+    } else if (data.mode == 'mid'){
+      value = midThrottle / 1000;
       console.log('Sending motor control value of '+ value)
       motorControl.setThrottle(value, value, value, value);
     } else if (data.mode == 'low'){
