@@ -11,7 +11,7 @@ using namespace Navio;
 
 extern "C" {
 
-    void run(float ms)
+    void set(float ms_1, float ms_2, float ms_3, float ms_4)
     {
         static const uint8_t outputEnablePin = RPI_GPIO_27;
 
@@ -30,10 +30,10 @@ extern "C" {
         pwm.initialize();
         pwm.setFrequency(50);
 
-            pwm.setPWMmS(MOTOR_1, ms);
-            pwm.setPWMmS(MOTOR_2, ms);
-            pwm.setPWMmS(MOTOR_3, ms);
-            pwm.setPWMmS(MOTOR_4, ms);
+            pwm.setPWMmS(MOTOR_1, ms_1);
+            pwm.setPWMmS(MOTOR_2, ms_2);
+            pwm.setPWMmS(MOTOR_3, ms_3);
+            pwm.setPWMmS(MOTOR_4, ms_4);
 
     }
 
