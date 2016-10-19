@@ -12,7 +12,21 @@ using namespace Navio;
 
 class Control {
 public:
+    Control() {
+        static const uint8_t outputEnablePin = RPI_GPIO_27;
+        Pin pin(outputEnablePin);
+        if (pin.init()) {
+            pin.setMode(Pin::GpioModeOutput);
+            pin.write(0); /* drive Output Enable low */
+        } else {
+            fprintf(stderr, "Output Enable not set. Are you root?\n");
+        }
 
+        PCA9685 pwm;
+        pwm.initialize();
+        pwm.setFrequency(FREQUENCY);
+        this->pwm = pwm;
+    }
     void set(float ms_1, float ms_2, float ms_3, float ms_4)
     {
         this->pwm.setPWMmS(MOTOR_1, ms_1);
@@ -24,21 +38,6 @@ private:
     PCA9685 pwm;
 };
 
-Control::Control() {
-
-    static const uint8_t outputEnablePin = RPI_GPIO_27;
-    Pin pin(outputEnablePin);
-    if (pin.init()) {
-        pin.setMode(Pin::GpioModeOutput);
-        pin.write(0); /* drive Output Enable low */
-    } else {
-        fprintf(stderr, "Output Enable not set. Are you root?\n");
-    }
-
-    PCA9685 pwm;
-    pwm.initialize();
-    pwm.setFrequency(FREQUENCY);
-    this->pwm = pwm;
-}
+// Control::
 
 extern Control control;
