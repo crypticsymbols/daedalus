@@ -13,6 +13,11 @@ using namespace Navio;
 extern "C" {
 
     void setup(){
+        
+    }
+
+    void set(float ms_1, float ms_2, float ms_3, float ms_4)
+    {   
         static const uint8_t outputEnablePin = RPI_GPIO_27;
         Pin pin(outputEnablePin);
         if (pin.init()) {
@@ -24,10 +29,7 @@ extern "C" {
         PCA9685 pwm;
         pwm.initialize();
         pwm.setFrequency(FREQUENCY);
-    }
-
-    void set(float ms_1, float ms_2, float ms_3, float ms_4)
-    {
+        
         PCA9685 pwm;
         pwm.setPWMmS(MOTOR_1, ms_1);
         pwm.setPWMmS(MOTOR_2, ms_2);
