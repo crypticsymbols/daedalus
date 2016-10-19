@@ -1,6 +1,9 @@
 #include "pwm.h"
 
-namespace demo {
+// #include <Navio/gpio.h>
+// #include "Navio/PCA9685.h"
+// #include "Navio/Util.h"
+namespace Navio {
 
 using v8::Context;
 using v8::Function;
@@ -13,6 +16,8 @@ using v8::Object;
 using v8::Persistent;
 using v8::String;
 using v8::Value;
+
+// using namespace Navio;
 
 Persistent<Function> PWMController::constructor;
 
@@ -77,9 +82,9 @@ void PWMController::setPWM(const FunctionCallbackInfo<Value>& args) {
   args.GetReturnValue().Set(Number::New(isolate, 77));
 }
 
-}  // namespace demo
+}  // namespace Navio
 
-namespace demo {
+namespace Navio {
 
 using v8::Local;
 using v8::Object;
@@ -90,7 +95,7 @@ void InitAll(Local<Object> exports) {
 
 NODE_MODULE(addon, InitAll)
 
-}  // namespace demo
+}  // namespace Navio
 
 // #define MOTOR_1 3
 // #define MOTOR_2 4

@@ -5,7 +5,7 @@
 #include <node.h>
 #include <node_object_wrap.h>
 
-namespace demo {
+namespace Navio {
 
 class PWMController : public node::ObjectWrap {
  public:
@@ -21,7 +21,7 @@ class PWMController : public node::ObjectWrap {
   PCA9685 pwm;
 };
 
-}  // namespace demo
+}  // namespace Navio
 
 #endif
 
