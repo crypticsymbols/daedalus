@@ -4,6 +4,8 @@
 #include <node.h>
 #include <node_object_wrap.h>
 
+#include "../Navio/Examples/cat.cpp"
+
 class MyObject : public node::ObjectWrap {
  public:
   static void Init(v8::Handle<v8::Object> exports);

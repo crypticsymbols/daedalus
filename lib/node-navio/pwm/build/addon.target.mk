@@ -96,7 +96,18 @@ INCS_Release := \
 
 OBJS := \
 	$(obj).target/$(TARGET)/addon.o \
-	$(obj).target/$(TARGET)/myobject.o
+	$(obj).target/$(TARGET)/myobject.o \
+	$(obj).target/$(TARGET)/../Navio/Navio/MPU9250.o \
+	$(obj).target/$(TARGET)/../Navio/Navio/MB85RC04.o \
+	$(obj).target/$(TARGET)/../Navio/Navio/gpio.o \
+	$(obj).target/$(TARGET)/../Navio/Navio/ADS1115.o \
+	$(obj).target/$(TARGET)/../Navio/Navio/MS5611.o \
+	$(obj).target/$(TARGET)/../Navio/Navio/Ublox.o \
+	$(obj).target/$(TARGET)/../Navio/Navio/MB85RC256.o \
+	$(obj).target/$(TARGET)/../Navio/Navio/I2Cdev.o \
+	$(obj).target/$(TARGET)/../Navio/Navio/PCA9685.o \
+	$(obj).target/$(TARGET)/../Navio/Navio/Util.o \
+	$(obj).target/$(TARGET)/../Navio/Examples/cat.o
 
 # Add to the list of files we specially track dependencies for.
 all_deps += $(OBJS)
@@ -114,12 +125,21 @@ $(OBJS): GYP_OBJCXXFLAGS := $(DEFS_$(BUILDTYPE)) $(INCS_$(BUILDTYPE))  $(CFLAGS_
 $(obj).$(TOOLSET)/$(TARGET)/%.o: $(srcdir)/%.cc FORCE_DO_CMD
 	@$(call do_cmd,cxx,1)
 
+$(obj).$(TOOLSET)/$(TARGET)/%.o: $(srcdir)/%.cpp FORCE_DO_CMD
+	@$(call do_cmd,cxx,1)
+
 # Try building from generated source, too.
 
 $(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj).$(TOOLSET)/%.cc FORCE_DO_CMD
 	@$(call do_cmd,cxx,1)
 
+$(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj).$(TOOLSET)/%.cpp FORCE_DO_CMD
+	@$(call do_cmd,cxx,1)
+
 $(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj)/%.cc FORCE_DO_CMD
+	@$(call do_cmd,cxx,1)
+
+$(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj)/%.cpp FORCE_DO_CMD
 	@$(call do_cmd,cxx,1)
 
 # End of this set of suffix rules
