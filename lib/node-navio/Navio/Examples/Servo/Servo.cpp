@@ -67,14 +67,14 @@ void PWMController::setPWM(const FunctionCallbackInfo<Value>& args) {
 
   PWMController* controller = ObjectWrap::Unwrap<PWMController>(args.Holder());
   // obj->pwm += 1;
-  printf ("floats: %4.2f %+.0e %E \n", args[0], args[0], args[0]);
+  // printf ("floats: %4.2f %+.0e %E \n", args[0], args[0], args[0]);
 
-  controller->pwm.setPWMmS(3, 1.1);
-  controller->pwm.setPWMmS(4, 1.1);
-  controller->pwm.setPWMmS(5, 1.1);
-  controller->pwm.setPWMmS(6, 1.1);
+  // controller->pwm.setPWMmS(3, 1.1);
+  // controller->pwm.setPWMmS(4, 1.1);
+  // controller->pwm.setPWMmS(5, 1.1);
+  // controller->pwm.setPWMmS(6, 1.1);
 
-  // args.GetReturnValue().Set(Number::New(isolate, 77));
+  args.GetReturnValue().Set(Number::New(isolate, 77));
 }
 
 }  // namespace demo
