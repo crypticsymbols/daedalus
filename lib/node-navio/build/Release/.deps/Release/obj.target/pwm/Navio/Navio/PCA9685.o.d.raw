@@ -1,2 +1,0 @@
-Release/obj.target/pwm/Navio/Navio/PCA9685.o: ../Navio/Navio/PCA9685.cpp \
-  ../Navio/Navio/PCA9685.h ../Navio/Navio/I2Cdev.h

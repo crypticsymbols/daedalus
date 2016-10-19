@@ -18,7 +18,7 @@ DEFS_Debug := \
 CFLAGS_Debug := \
 	-O0 \
 	-gdwarf-2 \
-	-mmacosx-version-min=10.5 \
+	-mmacosx-version-min=10.7 \
 	-arch x86_64 \
 	-Wall \
 	-Wendif-labels \
@@ -27,7 +27,8 @@ CFLAGS_Debug := \
 
 # Flags passed to only C files.
 CFLAGS_C_Debug := \
-	-fno-strict-aliasing
+	-fno-strict-aliasing \
+	-stdlib=libc++
 
 # Flags passed to only C++ files.
 CFLAGS_CC_Debug := \
@@ -35,7 +36,8 @@ CFLAGS_CC_Debug := \
 	-fno-rtti \
 	-fno-exceptions \
 	-fno-threadsafe-statics \
-	-fno-strict-aliasing
+	-fno-strict-aliasing \
+	-stdlib=libc++
 
 # Flags passed to only ObjC files.
 CFLAGS_OBJC_Debug :=
@@ -64,7 +66,7 @@ DEFS_Release := \
 CFLAGS_Release := \
 	-Os \
 	-gdwarf-2 \
-	-mmacosx-version-min=10.5 \
+	-mmacosx-version-min=10.7 \
 	-arch x86_64 \
 	-Wall \
 	-Wendif-labels \
@@ -73,7 +75,8 @@ CFLAGS_Release := \
 
 # Flags passed to only C files.
 CFLAGS_C_Release := \
-	-fno-strict-aliasing
+	-fno-strict-aliasing \
+	-stdlib=libc++
 
 # Flags passed to only C++ files.
 CFLAGS_CC_Release := \
@@ -81,7 +84,8 @@ CFLAGS_CC_Release := \
 	-fno-rtti \
 	-fno-exceptions \
 	-fno-threadsafe-statics \
-	-fno-strict-aliasing
+	-fno-strict-aliasing \
+	-stdlib=libc++
 
 # Flags passed to only ObjC files.
 CFLAGS_OBJC_Release :=
@@ -97,10 +101,7 @@ INCS_Release := \
 	-I$(srcdir)/Navio
 
 OBJS := \
-	$(obj).target/$(TARGET)/Navio/Examples/Servo/Servo.o \
-	$(obj).target/$(TARGET)/Navio/Navio/PCA9685.o \
-	$(obj).target/$(TARGET)/Navio/Navio/I2Cdev.o \
-	$(obj).target/$(TARGET)/Navio/Navio/gpio.o
+	$(obj).target/$(TARGET)/Navio/Examples/Servo/Servo.o
 
 # Add to the list of files we specially track dependencies for.
 all_deps += $(OBJS)
@@ -131,7 +132,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj)/%.cpp FORCE_DO_CMD
 LDFLAGS_Debug := \
 	-undefined dynamic_lookup \
 	-Wl,-search_paths_first \
-	-mmacosx-version-min=10.5 \
+	-mmacosx-version-min=10.7 \
 	-arch x86_64 \
 	-L$(builddir)
 
@@ -142,7 +143,7 @@ LIBTOOLFLAGS_Debug := \
 LDFLAGS_Release := \
 	-undefined dynamic_lookup \
 	-Wl,-search_paths_first \
-	-mmacosx-version-min=10.5 \
+	-mmacosx-version-min=10.7 \
 	-arch x86_64 \
 	-L$(builddir)
 

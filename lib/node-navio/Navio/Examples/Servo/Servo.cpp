@@ -14,7 +14,7 @@ using v8::Persistent;
 using v8::String;
 using v8::Value;
 
-using namespace Navio;
+// using namespace Navio;
 
 Persistent<Function> PWMController::constructor;
 
