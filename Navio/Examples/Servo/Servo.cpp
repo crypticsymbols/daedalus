@@ -20,6 +20,8 @@ public:
         this->pwm.setPWMmS(MOTOR_3, ms_3);
         this->pwm.setPWMmS(MOTOR_4, ms_4);
     }
+private:
+    PCA9685 pwm;
 };
 
 Control::Control() {
