@@ -1,7 +1,8 @@
 #include <iostream>      // for std::cout and std:cin
 #include "../Navio/PCA9685.h"
 
-class Cat                   // begin declaration of the class
+namespace Navio {
+  class Cat                   // begin declaration of the class
 {
   public:                    // begin public section
     Cat(int initialAge);     // constructor
@@ -86,4 +87,5 @@ int main()
   std::cout << "Now Frisky is " ;
   std::cout << Frisky.GetAge() << " years old.\n";
   return 0;
+}
 }
