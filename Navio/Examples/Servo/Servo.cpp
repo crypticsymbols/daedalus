@@ -29,10 +29,10 @@ public:
     }
     void set(float ms_1, float ms_2, float ms_3, float ms_4)
     {
-        this->pwm.setPWMmS(MOTOR_1, ms_1);
-        this->pwm.setPWMmS(MOTOR_2, ms_2);
-        this->pwm.setPWMmS(MOTOR_3, ms_3);
-        this->pwm.setPWMmS(MOTOR_4, ms_4);
+        pwm.setPWMmS(MOTOR_1, ms_1);
+        pwm.setPWMmS(MOTOR_2, ms_2);
+        pwm.setPWMmS(MOTOR_3, ms_3);
+        pwm.setPWMmS(MOTOR_4, ms_4);
     }
 private:
     PCA9685 pwm;
@@ -40,4 +40,4 @@ private:
 
 // Control::
 
-extern Control control;
+extern "C" Control control;
