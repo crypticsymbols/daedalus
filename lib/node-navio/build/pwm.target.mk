@@ -97,7 +97,10 @@ INCS_Release := \
 	-I$(srcdir)/Navio
 
 OBJS := \
-	$(obj).target/$(TARGET)/Navio/Examples/Servo/Servo.o
+	$(obj).target/$(TARGET)/Navio/Examples/Servo/Servo.o \
+	$(obj).target/$(TARGET)/Navio/Navio/PCA9685.o \
+	$(obj).target/$(TARGET)/Navio/Navio/I2Cdev.o \
+	$(obj).target/$(TARGET)/Navio/Navio/gpio.o
 
 # Add to the list of files we specially track dependencies for.
 all_deps += $(OBJS)

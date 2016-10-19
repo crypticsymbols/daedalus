@@ -8,7 +8,7 @@
 #include "Navio/PCA9685.h"
 #include "Navio/Util.h"
 
-namespace Navio {
+// namespace Navio {
 
 class PWMController : public node::ObjectWrap {
  public:
@@ -25,6 +25,6 @@ class PWMController : public node::ObjectWrap {
   PCA9685 pwm;
 };
 
-}  // namespace Navio
+// }  // namespace Navio
 
 #endif
