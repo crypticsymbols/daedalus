@@ -47,7 +47,8 @@ INCS_Debug := \
 	-I/Users/aaron/.node-gyp/5.0.0/include/node \
 	-I/Users/aaron/.node-gyp/5.0.0/src \
 	-I/Users/aaron/.node-gyp/5.0.0/deps/uv/include \
-	-I/Users/aaron/.node-gyp/5.0.0/deps/v8/include
+	-I/Users/aaron/.node-gyp/5.0.0/deps/v8/include \
+	-I$(srcdir)/Navio
 
 DEFS_Release := \
 	'-DNODE_GYP_MODULE_NAME=pwm' \
@@ -92,7 +93,8 @@ INCS_Release := \
 	-I/Users/aaron/.node-gyp/5.0.0/include/node \
 	-I/Users/aaron/.node-gyp/5.0.0/src \
 	-I/Users/aaron/.node-gyp/5.0.0/deps/uv/include \
-	-I/Users/aaron/.node-gyp/5.0.0/deps/v8/include
+	-I/Users/aaron/.node-gyp/5.0.0/deps/v8/include \
+	-I$(srcdir)/Navio
 
 OBJS := \
 	$(obj).target/$(TARGET)/Navio/Examples/Servo/Servo.o

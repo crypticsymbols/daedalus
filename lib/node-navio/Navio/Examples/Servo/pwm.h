@@ -1,9 +1,12 @@
-#include "../../Navio/PCA9685.h"
-// #######################
 #ifndef PWMCONTROLLER_H
 #define PWMCONTROLLER_H
+
 #include <node.h>
 #include <node_object_wrap.h>
+
+#include <Navio/gpio.h>
+#include "Navio/PCA9685.h"
+#include "Navio/Util.h"
 
 namespace Navio {
 
@@ -18,15 +21,10 @@ class PWMController : public node::ObjectWrap {
   static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
   static void setPWM(const v8::FunctionCallbackInfo<v8::Value>& args);
   static v8::Persistent<v8::Function> constructor;
-  PCA9685 pwm;
+  double value_;
+  // PCA9685 pwm;
 };
 
 }  // namespace Navio
 
 #endif
-
-// document 2 years api
-// 2 years frontend 
-// 2 years with RoR or angular
-// 
-// 

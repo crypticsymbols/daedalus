@@ -1,9 +1,6 @@
 #include "pwm.h"
 
-// #include <Navio/gpio.h>
-// #include "Navio/PCA9685.h"
-// #include "Navio/Util.h"
-namespace Navio {
+// namespace Navio {
 
 using v8::Context;
 using v8::Function;
@@ -17,13 +14,14 @@ using v8::Persistent;
 using v8::String;
 using v8::Value;
 
-// using namespace Navio;
+using namespace Navio;
 
 Persistent<Function> PWMController::constructor;
 
 PWMController::PWMController() {
-    PCA9685 pwmController;
-    pwm = pwmController;
+  value_ = 10;
+  // PCA9685 pwm_;
+  // pwm = pwm_;
 }
 
 PWMController::~PWMController() {
@@ -35,7 +33,7 @@ void PWMController::Init(Local<Object> exports) {
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "PWMController"));
-  tpl->InstanceTemplate()->SetInternalFieldCount(1);
+  tpl->InstanceTemplate()->SetInternalFieldCount(2);
 
   // Prototype
   NODE_SET_PROTOTYPE_METHOD(tpl, "setPWM", setPWM);
@@ -52,6 +50,7 @@ void PWMController::New(const FunctionCallbackInfo<Value>& args) {
     // Invoked as constructor: `new PWMController(...)`
     // double value = args[0]->IsUndefined() ? 0 : args[0]->NumberValue();
     // PWMController* obj = new PWMController(value);
+    // PCA9685 pwm;
     PWMController* obj = new PWMController();
     obj->Wrap(args.This());
     args.GetReturnValue().Set(args.This());
@@ -69,22 +68,16 @@ void PWMController::New(const FunctionCallbackInfo<Value>& args) {
 
 void PWMController::setPWM(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
+  // PCA9685 pwm;
+  PWMController* obj = ObjectWrap::Unwrap<PWMController>(args.Holder());
+  obj->value_ += 1;
 
-  PWMController* controller = ObjectWrap::Unwrap<PWMController>(args.Holder());
-  // obj->pwm += 1;
-  // printf ("floats: %4.2f %+.0e %E \n", args[0], args[0], args[0]);
-
-  // controller->pwm.setPWMmS(3, 1.1);
-  // controller->pwm.setPWMmS(4, 1.1);
-  // controller->pwm.setPWMmS(5, 1.1);
-  // controller->pwm.setPWMmS(6, 1.1);
-
-  args.GetReturnValue().Set(Number::New(isolate, 77));
+  args.GetReturnValue().Set(Number::New(isolate, obj->value_));
 }
 
-}  // namespace Navio
+// }  // namespace Navio
 
-namespace Navio {
+// namespace Navio {
 
 using v8::Local;
 using v8::Object;
@@ -95,7 +88,7 @@ void InitAll(Local<Object> exports) {
 
 NODE_MODULE(addon, InitAll)
 
-}  // namespace Navio
+// }  // namespace Navio
 
 // #define MOTOR_1 3
 // #define MOTOR_2 4
