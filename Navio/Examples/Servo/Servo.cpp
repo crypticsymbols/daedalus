@@ -40,6 +40,10 @@ private:
 
 // Control::
 
+extern "C" {
+    struct Control;
+}
+
 extern "C" Control* setup() {
     return new Control;
 }
