@@ -22,7 +22,7 @@ class PWMController : public node::ObjectWrap {
   static void setPWM(const v8::FunctionCallbackInfo<v8::Value>& args);
   static v8::Persistent<v8::Function> constructor;
   double value_;
-  // PCA9685 pwm;
+  PCA9685 pwm;
 };
 
 }  // namespace Navio
