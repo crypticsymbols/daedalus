@@ -40,4 +40,6 @@ private:
 
 // Control::
 
-extern "C" Control control;
+extern "C" {
+    Control control;
+}
