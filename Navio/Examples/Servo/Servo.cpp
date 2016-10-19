@@ -40,6 +40,11 @@ private:
 
 // Control::
 
-extern "C" {
-    Control control;
+extern "C" Control* setup() {
+    return new Control;
 }
+
+extern "C" void set(Control* c, float ms_1, float ms_2, float ms_3, float ms_4) {
+    c.set(ms_1, ms_2, ms_3, ms_4);
+}
+
