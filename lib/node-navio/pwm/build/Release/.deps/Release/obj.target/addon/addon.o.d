@@ -6,7 +6,8 @@ Release/obj.target/addon/addon.o: ../addon.cc \
   /Users/aaron/.node-gyp/5.0.0/include/node/v8config.h \
   /Users/aaron/.node-gyp/5.0.0/include/node/node_version.h ../myobject.h \
   /Users/aaron/.node-gyp/5.0.0/include/node/node_object_wrap.h \
-  ../../Navio/Examples/cat.cpp ../../Navio/Examples/../Navio/PCA9685.h \
+  ../../Navio/Examples/cat.cpp ../../Navio/Examples/cat.h \
+  ../../Navio/Examples/../Navio/PCA9685.h \
   ../../Navio/Examples/../Navio/I2Cdev.h
 ../addon.cc:
 /Users/aaron/.node-gyp/5.0.0/include/node/node.h:
@@ -17,5 +18,6 @@ Release/obj.target/addon/addon.o: ../addon.cc \
 ../myobject.h:
 /Users/aaron/.node-gyp/5.0.0/include/node/node_object_wrap.h:
 ../../Navio/Examples/cat.cpp:
+../../Navio/Examples/cat.h:
 ../../Navio/Examples/../Navio/PCA9685.h:
 ../../Navio/Examples/../Navio/I2Cdev.h:
