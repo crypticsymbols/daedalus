@@ -8,7 +8,6 @@ try{
 } catch (e) {
   console.log("can't load motor drivers")
 }
-motorControl.setup();
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/static/index.html');
