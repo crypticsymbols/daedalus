@@ -17,6 +17,8 @@ using v8::Value;
 Persistent<Function> PWMController::constructor;
 
 PWMController::PWMController() {
+    PCA9685 pwmController;
+    pwm = pwmController;
 }
 
 PWMController::~PWMController() {
@@ -63,10 +65,16 @@ void PWMController::New(const FunctionCallbackInfo<Value>& args) {
 void PWMController::setPWM(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
 
-  PWMController* obj = ObjectWrap::Unwrap<PWMController>(args.Holder());
-  obj->pwm += 1;
+  PWMController* controller = ObjectWrap::Unwrap<PWMController>(args.Holder());
+  // obj->pwm += 1;
+  printf ("floats: %4.2f %+.0e %E \n", args[0], args[0], args[0]);
 
-  args.GetReturnValue().Set(Number::New(isolate, obj->pwm));
+  controller->pwm.setPWMmS(3, 1.1);
+  controller->pwm.setPWMmS(4, 1.1);
+  controller->pwm.setPWMmS(5, 1.1);
+  controller->pwm.setPWMmS(6, 1.1);
+
+  // args.GetReturnValue().Set(Number::New(isolate, 77));
 }
 
 }  // namespace demo
