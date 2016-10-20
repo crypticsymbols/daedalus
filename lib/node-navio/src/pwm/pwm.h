@@ -11,15 +11,15 @@ class PWM : public node::ObjectWrap {
   static void Init(v8::Handle<v8::Object> exports);
 
  private:
-  explicit PWM(double value = 0);
+  explicit PWM();
   ~PWM();
 
   static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static void GetValue(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static void PlusOne(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static void Multiply(const v8::FunctionCallbackInfo<v8::Value>& args);
+  // static void GetValue(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void setPWM(const v8::FunctionCallbackInfo<v8::Value>& args);
+  // static void Multiply(const v8::FunctionCallbackInfo<v8::Value>& args);
   static v8::Persistent<v8::Function> constructor;
-  double value_;
+  PCA9685 pwm;
 };
 
 #endif

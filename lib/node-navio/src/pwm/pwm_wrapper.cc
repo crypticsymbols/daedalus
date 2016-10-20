@@ -7,4 +7,4 @@ void InitAll(Handle<Object> exports) {
   PWM::Init(exports);
 }
 
-NODE_MODULE(addon, InitAll)
+NODE_MODULE(pwm, InitAll)

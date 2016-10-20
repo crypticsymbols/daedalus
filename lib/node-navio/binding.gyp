@@ -1,18 +1,18 @@
 {
   "targets": [
-    {
-      "target_name": "addon",
-      "sources": [ "src/addon.cc", "src/myobject.cc", "src/cat.cpp" ],
-      "dependencies" : ['libnavio'],
-      'include_dirs': [
-        'src/Navio',
-      ],
-      'link_settings': {
-        'libraries': [
-          '-Wl,-rpath,./build/Release'
-        ]
-      }
-    },
+    # {
+    #   "target_name": "addon",
+    #   "sources": [ "src/addon.cc", "src/myobject.cc", "src/cat.cpp" ],
+    #   "dependencies" : ['libnavio'],
+    #   'include_dirs': [
+    #     'src/Navio',
+    #   ],
+    #   'link_settings': {
+    #     'libraries': [
+    #       '-Wl,-rpath,./build/Release'
+    #     ]
+    #   }
+    # },
     {
       "target_name": "pwm",
       "sources": [ "src/pwm/pwm_wrapper.cc", "src/pwm/pwm.cc" ],
