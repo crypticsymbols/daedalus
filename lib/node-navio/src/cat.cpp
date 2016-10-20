@@ -1,7 +1,7 @@
 #include <iostream>      // for std::cout and std:cin
 
 #include "./cat.h"
-#include "../Navio/PCA9685.h"
+#include <PCA9685.h>
 
 namespace Navio {
 
