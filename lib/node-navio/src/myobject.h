@@ -4,7 +4,7 @@
 #include <node.h>
 #include <node_object_wrap.h>
 
-#include "./src/cat.h"
+#include "./cat.h"
 
 class MyObject : public node::ObjectWrap {
  public:
