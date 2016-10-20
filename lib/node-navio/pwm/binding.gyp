@@ -5,7 +5,7 @@
       "sources": [ "addon.cc", "myobject.cc", "../Navio/Examples/cat.cpp" ],
       "dependencies" : ['pwm'],
       'link_settings': {
-        'library_dirs': [
+        'libraries': [
           './build/Release'
         ]
       }
