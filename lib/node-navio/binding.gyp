@@ -4,6 +4,9 @@
       "target_name": "addon",
       "sources": [ "addon.cc", "myobject.cc", "src/cat.cpp" ],
       "dependencies" : ['pwm'],
+      'include_dirs': [
+        'src/Navio/Navio',
+      ],
       'link_settings': {
         'libraries': [
           '-Wl,-rpath,./build/Release'
