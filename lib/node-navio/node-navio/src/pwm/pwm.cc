@@ -15,7 +15,7 @@ using namespace v8;
 using namespace Navio;
 
 Persistent<Function> PWM::constructor;
-// Persistent<PCA9685> pwmInterface;
+Persistent<PCA9685> pwmInterface;
 
 PWM::PWM() {
   static const uint8_t outputEnablePin = RPI_GPIO_27;
@@ -46,8 +46,8 @@ void PWM::Init(Handle<Object> exports) {
 
   // Prototype
   NODE_SET_PROTOTYPE_METHOD(tpl, "setPWM", setPWM);
-  // NODE_SET_PROTOTYPE_METHOD(tpl, "reallySetPWM", reallySetPWM);
-  // NODE_SET_PROTOTYPE_METHOD(tpl, "pwmInterface", pwmInterface);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "reallySetPWM", reallySetPWM);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "pwmInterface", pwmInterface);
 
   constructor.Reset(isolate, tpl->GetFunction());
   exports->Set(String::NewFromUtf8(isolate, "PWM"),
@@ -98,7 +98,7 @@ void PWM::setPWM(const FunctionCallbackInfo<Value>& args) {
 
   obj->reallySetPWM(ms_1, ms_2, ms_3, ms_4);
 
-  args.GetReturnValue().Set(Boolean::New(isolate, true));
+  args.GetReturnValue().Set(Boolean::New(isolate, obj->pwmInterface.testConnection()));
 }
 
 // void PWM::Multiply(const FunctionCallbackInfo<Value>& args) {
