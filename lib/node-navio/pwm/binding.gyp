@@ -3,7 +3,12 @@
     {
       "target_name": "addon",
       "sources": [ "addon.cc", "myobject.cc", "../Navio/Examples/cat.cpp" ],
-      "dependencies" : ['pwm']
+      "dependencies" : ['pwm'],
+      'link_settings': {
+        'library_dirs': [
+          './build/Release'
+        ]
+      }
       # "include_dirs": [ "../Navio/Examples" ]
       # "xcode_settings": {
       #   "OTHER_CFLAGS": ["-stdlib=libc++"],
