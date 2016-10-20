@@ -1,4 +1,4 @@
-namespace Navio {
+
   class Cat                   // begin declaration of the class
 {
   public:                    // begin public section
@@ -14,4 +14,3 @@ namespace Navio {
     int itsAge;              // member variable
     char * string;
 };
-}
