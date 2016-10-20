@@ -3,11 +3,11 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var HTTP_PORT = 8080;
 
-try{
+// try{
   var motorControl = require('./lib/motors');
-} catch (e) {
-  console.log("can't load motor drivers")
-}
+// } catch (e) {
+//   console.log("can't load motor drivers")
+// }
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/static/index.html');

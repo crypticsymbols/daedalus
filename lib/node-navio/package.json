@@ -1,7 +1,0 @@
-{
-  "name": "node-navio",
-  "gypfile": true,
-  "dependencies": {
-    "bindings": "~1.2.1"
-  }
-}
