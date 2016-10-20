@@ -8,8 +8,11 @@
 // ######################
 
 #include "pwm.h"
+#include <gpio.h>
+#include <Util.h>
 
 using namespace v8;
+using namespace Navio;
 
 Persistent<Function> PWM::constructor;
 
@@ -26,7 +29,7 @@ PWM::PWM() {
   PCA9685 pwm;
   pwm.initialize();
   pwm.setFrequency(FREQUENCY);
-  this->pwm = pwm;
+  this->pwmInterface = pwm;
 }
 
 PWM::~PWM() {
@@ -79,19 +82,19 @@ void PWM::setPWM(const FunctionCallbackInfo<Value>& args) {
   HandleScope scope(isolate);
   PWM* obj = ObjectWrap::Unwrap<PWM>(args.Holder());
 
-  float ms_1 = args[0]->FloatValue();
-  float ms_2 = args[1]->FloatValue();
-  float ms_3 = args[2]->FloatValue();
-  float ms_4 = args[3]->FloatValue();
+  float ms_1 = args[0]->IsUndefined() ? 0 : args[0]->NumberValue();
+  float ms_2 = args[1]->IsUndefined() ? 0 : args[1]->NumberValue();
+  float ms_3 = args[2]->IsUndefined() ? 0 : args[2]->NumberValue();
+  float ms_4 = args[3]->IsUndefined() ? 0 : args[3]->NumberValue();
 
-  printf('values %4.2F ## %4.2F ## %4.2F ## %4.2F', ms_1, ms_2, ms_3, ms_4);
+  printf("values %f ## %f ## %f ## %f", ms_1, ms_2, ms_3, ms_4);
 
-  pwm.setPWMmS(MOTOR_1, ms_1);
-  pwm.setPWMmS(MOTOR_2, ms_2);
-  pwm.setPWMmS(MOTOR_3, ms_3);
-  pwm.setPWMmS(MOTOR_4, ms_4);
+  obj->pwmInterface.setPWMmS(MOTOR_1, ms_1);
+  obj->pwmInterface.setPWMmS(MOTOR_2, ms_2);
+  obj->pwmInterface.setPWMmS(MOTOR_3, ms_3);
+  obj->pwmInterface.setPWMmS(MOTOR_4, ms_4);
 
-  args.GetReturnValue().Set(Number::New(isolate, obj->value_));
+  args.GetReturnValue().Set(Boolean::New(isolate, pwmInterface.testConnection()));
 }
 
 // void PWM::Multiply(const FunctionCallbackInfo<Value>& args) {

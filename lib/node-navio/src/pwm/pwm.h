@@ -19,7 +19,7 @@ class PWM : public node::ObjectWrap {
   static void setPWM(const v8::FunctionCallbackInfo<v8::Value>& args);
   // static void Multiply(const v8::FunctionCallbackInfo<v8::Value>& args);
   static v8::Persistent<v8::Function> constructor;
-  PCA9685 pwm;
+  static PCA9685 pwmInterface;
 };
 
 #endif
