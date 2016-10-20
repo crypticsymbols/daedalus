@@ -2,7 +2,7 @@
   "targets": [
     {
       "target_name": "addon",
-      "sources": [ "addon.cc", "myobject.cc", "src/cat.cpp" ],
+      "sources": [ "src/addon.cc", "src/myobject.cc", "src/cat.cpp" ],
       "dependencies" : ['pwm'],
       'include_dirs': [
         'src/Navio/Navio',
