@@ -4,7 +4,7 @@
 #include <node.h>
 #include <node_object_wrap.h>
 
-#include "../Navio/Examples/cat.cpp"
+#include "../Navio/Examples/cat.h"
 
 class MyObject : public node::ObjectWrap {
  public:

@@ -324,6 +324,11 @@ ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
                  $(join ^,addon.target.mk)))),)
   include addon.target.mk
 endif
+ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
+    $(findstring $(join ^,$(prefix)),\
+                 $(join ^,pwm.target.mk)))),)
+  include pwm.target.mk
+endif
 
 quiet_cmd_regen_makefile = ACTION Regenerating $@
 cmd_regen_makefile = cd $(srcdir); /Users/aaron/.nvm/versions/node/v5.0.0/lib/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "--toplevel-dir=." -I/Users/aaron/Desktop/daedalus/lib/node-navio/pwm/build/config.gypi -I/Users/aaron/.nvm/versions/node/v5.0.0/lib/node_modules/node-gyp/addon.gypi -I/Users/aaron/.node-gyp/5.0.0/include/node/common.gypi "--depth=." "-Goutput_dir=." "--generator-output=build" "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/Users/aaron/.node-gyp/5.0.0" "-Dnode_gyp_dir=/Users/aaron/.nvm/versions/node/v5.0.0/lib/node_modules/node-gyp" "-Dnode_lib_file=node.lib" "-Dmodule_root_dir=/Users/aaron/Desktop/daedalus/lib/node-navio/pwm" binding.gyp
