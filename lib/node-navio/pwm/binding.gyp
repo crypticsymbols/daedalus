@@ -6,7 +6,7 @@
       "dependencies" : ['pwm'],
       'link_settings': {
         'libraries': [
-          '-Wl,-rpath,/path/to/libraries'
+          '-Wl,-rpath,./build/Release'
         ]
       }
       # "include_dirs": [ "../Navio/Examples" ]
