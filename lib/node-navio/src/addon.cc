@@ -1,6 +1,5 @@
 #include <node.h>
 #include "myobject.h"
-// #include "../Navio/Examples/cat.cpp"
 
 using namespace v8;
 
