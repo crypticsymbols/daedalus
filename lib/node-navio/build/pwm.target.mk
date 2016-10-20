@@ -10,7 +10,6 @@ DEFS_Debug := \
 	'-D_DARWIN_USE_64_BIT_INODE=1' \
 	'-D_LARGEFILE_SOURCE' \
 	'-D_FILE_OFFSET_BITS=64' \
-	'-DBUILDING_NODE_EXTENSION' \
 	'-DDEBUG' \
 	'-D_DEBUG'
 
@@ -18,7 +17,7 @@ DEFS_Debug := \
 CFLAGS_Debug := \
 	-O0 \
 	-gdwarf-2 \
-	-mmacosx-version-min=10.7 \
+	-mmacosx-version-min=10.5 \
 	-arch x86_64 \
 	-Wall \
 	-Wendif-labels \
@@ -27,8 +26,7 @@ CFLAGS_Debug := \
 
 # Flags passed to only C files.
 CFLAGS_C_Debug := \
-	-fno-strict-aliasing \
-	-stdlib=libc++
+	-fno-strict-aliasing
 
 # Flags passed to only C++ files.
 CFLAGS_CC_Debug := \
@@ -36,8 +34,7 @@ CFLAGS_CC_Debug := \
 	-fno-rtti \
 	-fno-exceptions \
 	-fno-threadsafe-statics \
-	-fno-strict-aliasing \
-	-stdlib=libc++
+	-fno-strict-aliasing
 
 # Flags passed to only ObjC files.
 CFLAGS_OBJC_Debug :=
@@ -49,8 +46,7 @@ INCS_Debug := \
 	-I/Users/aaron/.node-gyp/5.0.0/include/node \
 	-I/Users/aaron/.node-gyp/5.0.0/src \
 	-I/Users/aaron/.node-gyp/5.0.0/deps/uv/include \
-	-I/Users/aaron/.node-gyp/5.0.0/deps/v8/include \
-	-I$(srcdir)/Navio
+	-I/Users/aaron/.node-gyp/5.0.0/deps/v8/include
 
 DEFS_Release := \
 	'-DNODE_GYP_MODULE_NAME=pwm' \
@@ -59,14 +55,13 @@ DEFS_Release := \
 	'-DV8_DEPRECATION_WARNINGS=1' \
 	'-D_DARWIN_USE_64_BIT_INODE=1' \
 	'-D_LARGEFILE_SOURCE' \
-	'-D_FILE_OFFSET_BITS=64' \
-	'-DBUILDING_NODE_EXTENSION'
+	'-D_FILE_OFFSET_BITS=64'
 
 # Flags passed to all source files.
 CFLAGS_Release := \
 	-Os \
 	-gdwarf-2 \
-	-mmacosx-version-min=10.7 \
+	-mmacosx-version-min=10.5 \
 	-arch x86_64 \
 	-Wall \
 	-Wendif-labels \
@@ -75,8 +70,7 @@ CFLAGS_Release := \
 
 # Flags passed to only C files.
 CFLAGS_C_Release := \
-	-fno-strict-aliasing \
-	-stdlib=libc++
+	-fno-strict-aliasing
 
 # Flags passed to only C++ files.
 CFLAGS_CC_Release := \
@@ -84,8 +78,7 @@ CFLAGS_CC_Release := \
 	-fno-rtti \
 	-fno-exceptions \
 	-fno-threadsafe-statics \
-	-fno-strict-aliasing \
-	-stdlib=libc++
+	-fno-strict-aliasing
 
 # Flags passed to only ObjC files.
 CFLAGS_OBJC_Release :=
@@ -97,11 +90,19 @@ INCS_Release := \
 	-I/Users/aaron/.node-gyp/5.0.0/include/node \
 	-I/Users/aaron/.node-gyp/5.0.0/src \
 	-I/Users/aaron/.node-gyp/5.0.0/deps/uv/include \
-	-I/Users/aaron/.node-gyp/5.0.0/deps/v8/include \
-	-I$(srcdir)/Navio
+	-I/Users/aaron/.node-gyp/5.0.0/deps/v8/include
 
 OBJS := \
-	$(obj).target/$(TARGET)/Navio/Examples/Servo/Servo.o
+	$(obj).target/$(TARGET)/src/Navio/Navio/MPU9250.o \
+	$(obj).target/$(TARGET)/src/Navio/Navio/MB85RC04.o \
+	$(obj).target/$(TARGET)/src/Navio/Navio/gpio.o \
+	$(obj).target/$(TARGET)/src/Navio/Navio/ADS1115.o \
+	$(obj).target/$(TARGET)/src/Navio/Navio/MS5611.o \
+	$(obj).target/$(TARGET)/src/Navio/Navio/Ublox.o \
+	$(obj).target/$(TARGET)/src/Navio/Navio/MB85RC256.o \
+	$(obj).target/$(TARGET)/src/Navio/Navio/I2Cdev.o \
+	$(obj).target/$(TARGET)/src/Navio/Navio/PCA9685.o \
+	$(obj).target/$(TARGET)/src/Navio/Navio/Util.o
 
 # Add to the list of files we specially track dependencies for.
 all_deps += $(OBJS)
@@ -130,46 +131,45 @@ $(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj)/%.cpp FORCE_DO_CMD
 # End of this set of suffix rules
 ### Rules for final target.
 LDFLAGS_Debug := \
-	-undefined dynamic_lookup \
 	-Wl,-search_paths_first \
-	-mmacosx-version-min=10.7 \
+	-mmacosx-version-min=10.5 \
 	-arch x86_64 \
-	-L$(builddir)
+	-L$(builddir) \
+	-install_name @rpath/pwm.dylib
 
 LIBTOOLFLAGS_Debug := \
-	-undefined dynamic_lookup \
 	-Wl,-search_paths_first
 
 LDFLAGS_Release := \
-	-undefined dynamic_lookup \
 	-Wl,-search_paths_first \
-	-mmacosx-version-min=10.7 \
+	-mmacosx-version-min=10.5 \
 	-arch x86_64 \
-	-L$(builddir)
+	-L$(builddir) \
+	-install_name @rpath/pwm.dylib
 
 LIBTOOLFLAGS_Release := \
-	-undefined dynamic_lookup \
 	-Wl,-search_paths_first
 
 LIBS :=
 
-$(builddir)/pwm.node: GYP_LDFLAGS := $(LDFLAGS_$(BUILDTYPE))
-$(builddir)/pwm.node: LIBS := $(LIBS)
-$(builddir)/pwm.node: GYP_LIBTOOLFLAGS := $(LIBTOOLFLAGS_$(BUILDTYPE))
-$(builddir)/pwm.node: TOOLSET := $(TOOLSET)
-$(builddir)/pwm.node: $(OBJS) FORCE_DO_CMD
-	$(call do_cmd,solink_module)
+$(builddir)/pwm.dylib: GYP_LDFLAGS := $(LDFLAGS_$(BUILDTYPE))
+$(builddir)/pwm.dylib: LIBS := $(LIBS)
+$(builddir)/pwm.dylib: GYP_LIBTOOLFLAGS := $(LIBTOOLFLAGS_$(BUILDTYPE))
+$(builddir)/pwm.dylib: LD_INPUTS := $(OBJS)
+$(builddir)/pwm.dylib: TOOLSET := $(TOOLSET)
+$(builddir)/pwm.dylib: $(OBJS) FORCE_DO_CMD
+	$(call do_cmd,solink)
 
-all_deps += $(builddir)/pwm.node
+all_deps += $(builddir)/pwm.dylib
 # Add target alias
 .PHONY: pwm
-pwm: $(builddir)/pwm.node
+pwm: $(builddir)/pwm.dylib
 
-# Short alias for building this executable.
-.PHONY: pwm.node
-pwm.node: $(builddir)/pwm.node
+# Short alias for building this shared library.
+.PHONY: pwm.dylib
+pwm.dylib: $(builddir)/pwm.dylib
 
-# Add executable to "all" target.
+# Add shared library to "all" target.
 .PHONY: all
-all: $(builddir)/pwm.node
+all: $(builddir)/pwm.dylib
 

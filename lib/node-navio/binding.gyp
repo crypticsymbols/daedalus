@@ -1,15 +1,19 @@
 {
   "targets": [
     {
+      "target_name": "addon",
+      "sources": [ "addon.cc", "myobject.cc", "src/Navio/Examples/cat.cpp" ],
+      "dependencies" : ['pwm'],
+      'link_settings': {
+        'libraries': [
+          '-Wl,-rpath,./build/Release'
+        ]
+      }
+    },
+    {
       "target_name": "pwm",
-      "sources": [ "Navio/Examples/Servo/Servo.cpp" ],
-      # "sources": [ "Navio/Examples/Servo/Servo.cpp", "Navio/Navio/PCA9685.cpp", "Navio/Navio/I2Cdev.cpp", "Navio/Navio/gpio.cpp" ],
-      "include_dirs": ['Navio'],
-      # "libraries": ['-L./Navio']
-      # "xcode_settings": {
-      #   "OTHER_CFLAGS": ["-stdlib=libc++"],
-      #   'MACOSX_DEPLOYMENT_TARGET': '10.7'
-      # }
+      'type': 'shared_library',
+      "sources": ["src/Navio/Navio/MPU9250.cpp", "src/Navio/Navio/MB85RC04.cpp", "src/Navio/Navio/gpio.cpp", "src/Navio/Navio/ADS1115.cpp", "src/Navio/Navio/MS5611.cpp", "src/Navio/Navio/Ublox.cpp", "src/Navio/Navio/MB85RC256.cpp", "src/Navio/Navio/I2Cdev.cpp", "src/Navio/Navio/PCA9685.cpp", "src/Navio/Navio/Util.cpp"]
     }
   ]
 }
