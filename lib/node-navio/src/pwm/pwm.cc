@@ -70,12 +70,16 @@ void PWM::New(const FunctionCallbackInfo<Value>& args) {
   }
 }
 
-// void PWM::GetValue(const FunctionCallbackInfo<Value>& args) {
-//   Isolate* isolate = Isolate::GetCurrent();
-//   HandleScope scope(isolate);
-//   PWM* obj = ObjectWrap::Unwrap<PWM>(args.Holder());
-//   args.GetReturnValue().Set(Number::New(isolate, obj->value_));
-// }
+void PWM::reallySetPWM(ms_1, ms_2, ms_3, ms_4) {
+  this->pwmInterface.setPWMmS(MOTOR_1, ms_1);
+  this->pwmInterface.setPWMmS(MOTOR_2, ms_2);
+  this->pwmInterface.setPWMmS(MOTOR_3, ms_3);
+  this->pwmInterface.setPWMmS(MOTOR_4, ms_4);
+  // Isolate* isolate = Isolate::GetCurrent();
+  // HandleScope scope(isolate);
+  // PWM* obj = ObjectWrap::Unwrap<PWM>(args.Holder());
+  // args.GetReturnValue().Set(Number::New(isolate, obj->value_));
+}
 
 void PWM::setPWM(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = Isolate::GetCurrent();
@@ -89,10 +93,7 @@ void PWM::setPWM(const FunctionCallbackInfo<Value>& args) {
 
   printf("values %f ## %f ## %f ## %f", ms_1, ms_2, ms_3, ms_4);
 
-  obj->pwmInterface.setPWMmS(MOTOR_1, ms_1);
-  obj->pwmInterface.setPWMmS(MOTOR_2, ms_2);
-  obj->pwmInterface.setPWMmS(MOTOR_3, ms_3);
-  obj->pwmInterface.setPWMmS(MOTOR_4, ms_4);
+  obj.reallySetPWM(ms_1, ms_2, ms_3, ms_4);
 
   args.GetReturnValue().Set(Boolean::New(isolate, pwmInterface.testConnection()));
 }
