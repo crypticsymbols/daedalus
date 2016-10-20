@@ -15,7 +15,6 @@ using namespace v8;
 using namespace Navio;
 
 Persistent<Function> PWM::constructor;
-// Persistent<PCA9685> pwmInterface;
 
 PWM::PWM() {
   static const uint8_t outputEnablePin = RPI_GPIO_27;
@@ -46,8 +45,6 @@ void PWM::Init(Handle<Object> exports) {
 
   // Prototype
   NODE_SET_PROTOTYPE_METHOD(tpl, "setPWM", setPWM);
-  // NODE_SET_PROTOTYPE_METHOD(tpl, "reallySetPWM", reallySetPWM);
-  // NODE_SET_PROTOTYPE_METHOD(tpl, "pwmInterface", pwmInterface);
 
   constructor.Reset(isolate, tpl->GetFunction());
   exports->Set(String::NewFromUtf8(isolate, "PWM"),
@@ -78,10 +75,6 @@ void PWM::reallySetPWM(double ms_1, double ms_2, double ms_3, double ms_4) {
   this->pwmInterface.setPWMmS(MOTOR_2, ms_2);
   this->pwmInterface.setPWMmS(MOTOR_3, ms_3);
   this->pwmInterface.setPWMmS(MOTOR_4, ms_4);
-  // Isolate* isolate = Isolate::GetCurrent();
-  // HandleScope scope(isolate);
-  // PWM* obj = ObjectWrap::Unwrap<PWM>(args.Holder());
-  // args.GetReturnValue().Set(Number::New(isolate, obj->value_));
 }
 
 void PWM::setPWM(const FunctionCallbackInfo<Value>& args) {
@@ -100,17 +93,3 @@ void PWM::setPWM(const FunctionCallbackInfo<Value>& args) {
 
   args.GetReturnValue().Set(Boolean::New(isolate, true));
 }
-
-// void PWM::Multiply(const FunctionCallbackInfo<Value>& args) {
-//   Isolate* isolate = Isolate::GetCurrent();
-//   HandleScope scope(isolate);
-
-//   PWM* obj = ObjectWrap::Unwrap<PWM>(args.Holder());
-//   double multiple = args[0]->IsUndefined() ? 1 : args[0]->NumberValue();
-
-//   const int argc = 1;
-//   Local<Value> argv[argc] = { Number::New(isolate, obj->value_ * multiple) };
-
-//   Local<Function> cons = Local<Function>::New(isolate, constructor);
-//   args.GetReturnValue().Set(cons->NewInstance(argc, argv));
-// }
