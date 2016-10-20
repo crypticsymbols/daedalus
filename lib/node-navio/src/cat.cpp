@@ -3,7 +3,7 @@
 #include "./cat.h"
 #include <PCA9685.h>
 
-namespace Navio {
+// namespace Navio {
 
  // constructor of Cat,
 Cat::Cat(int initialAge)
@@ -75,4 +75,4 @@ int main()
   std::cout << Frisky.GetAge() << " years old.\n";
   return 0;
 }
-}
+// }

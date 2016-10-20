@@ -3,7 +3,7 @@
 
 
 using namespace v8;
-using namespace Navio;
+// using namespace Navio;
 
 Persistent<Function> MyObject::constructor;
 
