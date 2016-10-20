@@ -1,4 +1,5 @@
 
+
   class Cat                   // begin declaration of the class
 {
   public:                    // begin public section
@@ -14,3 +15,4 @@
     int itsAge;              // member variable
     char * string;
 };
+
