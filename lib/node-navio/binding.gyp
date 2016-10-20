@@ -15,7 +15,7 @@
     },
     {
       "target_name": "pwm",
-      "sources": [ "src/pwm_wrapper.cc", "src/pwm/pwm.cc" ],
+      "sources": [ "src/pwm/pwm_wrapper.cc", "src/pwm/pwm.cc" ],
       "dependencies" : ['libnavio'],
       'include_dirs': [
         'src/Navio',
