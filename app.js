@@ -1,21 +1,31 @@
+// App specific config
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var HTTP_PORT = 8080;
 
-// try{
-  var motorControl = require('./lib/motors');
-// } catch (e) {
-//   console.log("can't load motor drivers")
-// }
-
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/static/index.html');
-});
-
+// Calibration config, will get moved into userland
 var maxThrottle = 1900.0;
 var midThrottle = 1500.0;
 var minThrottle = 1100.0;
+
+// vehicle setup
+opts = {
+  motors:{
+    3: {x: 1, y: 1},
+    4: {x: 1, y: -1},
+    5: {x: -1, y: -1},
+    6: {x: -1, y: 1}
+  },
+  minThrottle: minThrottle,
+  midThrottle: midThrottle,
+  maxThrottle: maxThrottle
+}
+
+var vehicle = require('./lib/platforms/quadcopter').init(opts);
+
+
+
 
 var mapControls = function(inputs){
   var throttle = ((maxThrottle - minThrottle) * (inputs.throttle / 100)) + minThrottle;
@@ -41,7 +51,7 @@ io.on('connection', function (socket) {
   console.log('socket connected');
 
   socket.on('flightCommand', function (data) {
-    mapControls(data.values);
+    vehicle.controlInput(data.values);
   });
 
   socket.on('calibrationCommand', function (data) {
@@ -64,6 +74,10 @@ io.on('connection', function (socket) {
   // Start video
   // uv4l --driver raspicam --auto-video_nr --encoding h264 --width 640 --height 480 --enable-server on
 
+});
+
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/static/index.html');
 });
 
 server.listen(HTTP_PORT);
