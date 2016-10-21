@@ -12,6 +12,8 @@ var minThrottle = 1100.0;
 // vehicle setup
 opts = {
   motors:{
+    // for copters let's just map x,y from center of gravity
+    // pwmChannel: {x, y}
     3: {x: 1, y: 1},
     4: {x: 1, y: -1},
     5: {x: -1, y: -1},
@@ -23,13 +25,6 @@ opts = {
 }
 
 var vehicle = require('./lib/platforms/quadcopter').init(opts);
-
-
-
-
-// var mapControls = function(inputs){
-  
-// }
 
 io.on('connection', function (socket) {
   console.log('socket connected');
