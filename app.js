@@ -28,7 +28,10 @@ var mapControls = function(inputs){
   }
 
   try {
-    motorControl.setThrottle(throttles.left, throttles.right, throttles.forward, throttles.rear);
+    motorControl.setThrottle(3, throttles.left);
+    motorControl.setThrottle(4, throttles.right);
+    motorControl.setThrottle(5, throttles.forward);
+    motorControl.setThrottle(6, throttles.rear);
   } catch (e){
     console.log(throttles);
   }
