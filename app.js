@@ -27,25 +27,9 @@ var vehicle = require('./lib/platforms/quadcopter').init(opts);
 
 
 
-var mapControls = function(inputs){
-  var throttle = ((maxThrottle - minThrottle) * (inputs.throttle / 100)) + minThrottle;
-  console.log(inputs);
-  var throttles = {
-    left: (throttle * inputs.x) / 1000,
-    right: (throttle * (1 / inputs.x)) / 1000,
-    forward: (throttle * inputs.y) / 1000,
-    rear: (throttle * (1 / inputs.y)) / 1000
-  }
-
-  try {
-    motorControl.setThrottle(3, throttles.left);
-    motorControl.setThrottle(4, throttles.right);
-    motorControl.setThrottle(5, throttles.forward);
-    motorControl.setThrottle(6, throttles.rear);
-  } catch (e){
-    console.log(throttles);
-  }
-}
+// var mapControls = function(inputs){
+  
+// }
 
 io.on('connection', function (socket) {
   console.log('socket connected');
