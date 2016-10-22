@@ -28,20 +28,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('calibrationCommand', function (data) {
-    var value;
-    if (data.mode == 'high'){
-      value = opts.maxThrottle / 1000;
-      console.log('Sending motor control value of '+ value)
-      motorControl.setThrottle(value, value, value, value);
-    } else if (data.mode == 'mid'){
-      value = opts.midThrottle / 1000;
-      console.log('Sending motor control value of '+ value)
-      motorControl.setThrottle(value, value, value, value);
-    } else if (data.mode == 'low'){
-      value = opts.minThrottle / 1000;
-      console.log('Sending motor control value of '+ value)
-      motorControl.setThrottle(value, value, value, value);
-    }
+    vehicle.calibrationCommand(data.mode);
   });
 
   // Start video
