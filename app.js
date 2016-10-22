@@ -8,10 +8,10 @@ var HTTP_PORT = 8080;
 opts = {
   motorMap:{
     // pwmChannel: {x, y}
-    3: {y: 1, x: -1},
-    4: {y: 1, x: 1},
-    5: {y: -1, x: 1},
-    6: {y: -1, x: -1}
+    3: {y: 1, x: 1},
+    4: {y: -1, x: -1},
+    5: {y: 1, x: -1},
+    6: {y: -1, x: 1}
   },
   minThrottle: 1100.0,
   midThrottle: 1500.0,
