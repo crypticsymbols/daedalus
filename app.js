@@ -15,7 +15,8 @@ opts = {
   },
   minThrottle: 1100.0,
   midThrottle: 1500.0,
-  maxThrottle: 1900.0
+  maxThrottle: 1900.0,
+  // maxAbsoluteDeflection: 0.1
 }
 
 var vehicle = require('./lib/platforms/quadcopter').init(opts);

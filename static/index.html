@@ -60,9 +60,9 @@
       // 
       // GET IN THE CHOPPAH
       // 
-      controlState.attitude.x = (cursorX / (window.innerWidth / 2) + 9) / 10;
-      controlState.attitude.y = (cursorY / (window.innerHeight / 2) + 9) / 10;
-      // console.log(controlState);
+      controlState.attitude.x = ((cursorX / (window.innerWidth / 2) + 9) / 10) - 1;
+      controlState.attitude.y = ((cursorY / (window.innerHeight / 2) + 9) / 10) - 1;
+      console.log(controlState.attitude);
       sendState();
     }
 
