@@ -28,7 +28,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('calibrationCommand', function (data) {
-    vehicle.calibrationCommand(data.mode);
+    vehicle.calibrationRoutine(data.mode);
   });
 
   // Start video
