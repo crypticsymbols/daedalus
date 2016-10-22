@@ -4,24 +4,18 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var HTTP_PORT = 8080;
 
-// Calibration config, will get moved into userland
-var maxThrottle = 1900.0;
-var midThrottle = 1500.0;
-var minThrottle = 1100.0;
-
 // vehicle setup
 opts = {
-  motors:{
-    // for copters let's just map x,y from center of gravity
+  motorMap:{
     // pwmChannel: {x, y}
-    3: {x: 1, y: 1},
-    4: {x: 1, y: -1},
-    5: {x: -1, y: -1},
-    6: {x: -1, y: 1}
+    3: {y: 1, x: -1},
+    4: {y: 1, x: 1},
+    5: {y: -1, x: 1},
+    6: {y: -1, x: -1}
   },
-  minThrottle: minThrottle,
-  midThrottle: midThrottle,
-  maxThrottle: maxThrottle
+  minThrottle: 1100.0,
+  midThrottle: 1500.0,
+  maxThrottle: 1900.0
 }
 
 var vehicle = require('./lib/platforms/quadcopter').init(opts);
