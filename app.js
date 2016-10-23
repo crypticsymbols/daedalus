@@ -5,21 +5,10 @@ var io = require('socket.io')(server);
 var HTTP_PORT = 8080;
 
 // vehicle setup
-opts = {
-  motorMap:{
-    // pwmChannel: {x, y}
-    3: {y: 1, x: 1},
-    4: {y: -1, x: -1},
-    5: {y: 1, x: -1},
-    6: {y: -1, x: 1}
-  },
-  minThrottle: 1100.0,
-  midThrottle: 1500.0,
-  maxThrottle: 1900.0,
-  // maxAbsoluteDeflection: 0.1
-}
+opts = {motorMap:{3: {y: 1, x: 1}, 4: {y: -1, x: -1}, 5: {y: 1, x: -1}, 6: {y: -1, x: 1} }, minThrottle: 1100.0, midThrottle: 1500.0, maxThrottle: 1900.0, }
 
-var vehicle = require('./lib/platforms/quadcopter').init(opts);
+var quad = require('./lib/platforms/quadcopter');
+var vehicle = new quad(opts);
 
 io.on('connection', function (socket) {
   console.log('socket connected');

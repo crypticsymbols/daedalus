@@ -17,3 +17,9 @@ Node.js fly-by-wire for Navio+
 * Recruit interested people who want to help! Hex/Octo/Y copter? Heli? Fixed Wing? I'm trying to keep the broad view but I only have a quad to work with.
 * Implement layers towards automated operation: self-knowledge (sensor access), platform-level knowledge of how to perform certain tasks (pitch, roll, yaw, climb, land, go to point...), mode-level (stabilized, manual, auto, waypoint) logic for instructing platform to perform those tasks
 * Better connectivity (4G modem, antenna tracker)
+
+X/Y Notes
+X - up/down, + is up
+Y- left/right, + is right
+Xmoment: + is pitch up, - is pitch down
+YMoment - + is roll left (right up), - is roll left (left up)
