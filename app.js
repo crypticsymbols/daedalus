@@ -22,11 +22,19 @@ opts = {
 var quad = require('./lib/platforms/quadcopter');
 var vehicle = new quad(opts);
 
+vehicle.on('controlInputUpdated', function(msg){
+  console.log('updated control inputs: \n', msg)
+})
+
+vehicle.on('error', function(msg){
+  console.log('VEHICLE ERROR: \n', msg)
+})
+
 io.on('connection', function (socket) {
   console.log('socket connected');
 
   socket.on('flightCommand', function (data) {
-    vehicle.controlInput(data.values);
+    vehicle.updateControlInput(data.values);
   });
 
   socket.on('calibrationCommand', function (data) {
