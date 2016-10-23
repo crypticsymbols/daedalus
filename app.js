@@ -19,8 +19,8 @@ opts = {
   // maxAbsoluteDeflection: 0.1
 }
 
-var quad = require('./lib/platforms/quadcopter');
-var vehicle = new quad(opts);
+var copter = require('./lib/platforms/copter');
+var vehicle = new copter(opts);
 
 vehicle.on('controlInputUpdated', function(msg){
   console.log('updated control inputs: \n', msg)
