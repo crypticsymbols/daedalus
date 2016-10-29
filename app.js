@@ -41,13 +41,14 @@ io.on('connection', function (socket) {
     vehicle.calibrationRoutine(data.mode);
   });
 
-  // Start video
-  // uv4l --driver raspicam --auto-video_nr --encoding h264 --width 640 --height 480 --enable-server on
-
 });
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/static/index.html');
+});
+
+app.get('/gamepad.js', function (req, res) {
+  res.sendFile(__dirname + '/static/gamepad.js');
 });
 
 server.listen(HTTP_PORT);

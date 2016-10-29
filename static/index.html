@@ -3,28 +3,58 @@
 <head>
   <title></title>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="/gamepad.js"></script>
 </head>
 <body>
   <input type="checkbox" id="calibrationMode" onClick='toggleCalibration()'>
   <button onclick='sendCalibration("low")'>Calibrate LOW</button>
   <button onclick='sendCalibration("mid")'>Calibrate MID</button>
   <button onclick='sendCalibration("high")'>Calibrate HIGH</button>
-  <img src="http://10.0.1.10:8080/stream/video.mjpeg" alt="image">
+  <!-- <img src="http://10.0.1.10:8080/stream/video.mjpeg" alt="image"> -->
   <script>
 
     var socket = io.connect();
 
-    // socket.on('flightData', function (data) {
-    //   console.log(data);
-    // });
+    var controlMap = {
+      throttle: 1,
+      yaw: 0,
+      pitch: 3,
+      roll: 2
+    }
+
+    var buttons = {
+      b: 1,
+      a: 0,
+      x: 2,
+      y: 3,
+    }
 
     var controlState = {
       attitude: {
         x: 0,
         y: 0,
+        zR: 0 // Yaw, idk
       },
       throttle: 0
     }
+
+    gamepad(function(inputs){
+      var newControlState = {
+        attitude: {
+          x: inputs.axes[2]/10,
+          y: inputs.axes[3]/10,
+          zR: inputs.axes[0]/10,
+        },
+        throttle: (inputs.axes[1] - ( inputs.axes[1] * 2 ))*100
+      }
+      newControlState.buttons = inputs.buttons.map(function(v, i){
+        // if (v.pressed){
+        //   console.log(v.value, i)
+        // }
+        return {pressed: v.pressed, value: v.value}
+      });
+      handleStateUpdate(newControlState);
+    });
 
     var calibrationMode = true;
     function toggleCalibration(){
@@ -33,37 +63,21 @@
     }
     document.getElementById('calibrationMode').checked = calibrationMode;
 
-    document.onkeydown = function(e){
-      if (e.key == 'q'){
-        controlState.throttle += 1;
-      } else if (e.key == 'a'){
-        controlState.throttle -= 1;
+    var flightMode = function(){
+      return !calibrationMode;
+    }
+
+    var handleStateUpdate = function(state){
+      if (JSON.stringify(state) != JSON.stringify(controlState) && flightMode()){
+        this.controlState = state;
+        sendState();
       }
-      sendState();
     }
 
     function sendCalibration(mode){
       socket.emit('calibrationCommand', {
         mode: mode
       })
-    }
-
-    document.onmousemove = function(e){
-      if (!calibrationMode){
-        translateControlsToState(e);
-      }
-    }
-
-    function translateControlsToState(e){
-      cursorX = e.pageX;
-      cursorY = e.pageY;
-      // 
-      // GET IN THE CHOPPAH
-      // 
-      controlState.attitude.x = ((cursorX / (window.innerWidth / 2) + 9) / 10) - 1;
-      controlState.attitude.y = ((cursorY / (window.innerHeight / 2) + 9) / 10) - 1;
-      console.log(controlState.attitude);
-      sendState();
     }
 
     function sendState(){
