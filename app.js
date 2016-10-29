@@ -7,11 +7,11 @@ var HTTP_PORT = 1337;
 // vehicle setup
 opts = {
   motorMap:{
-    // pwmChannel: {x, y}
-    3: {y: 1, x: 1},
-    4: {y: -1, x: -1},
-    5: {y: 1, x: -1},
-    6: {y: -1, x: 1}
+    // pwmChannel: {x, y, rotation}
+    3: {y: 1, x: 1, rotation: 'cw'},
+    4: {y: -1, x: -1, rotation: 'cw'},
+    5: {y: 1, x: -1, rotation: 'ccw'},
+    6: {y: -1, x: 1, rotation: 'ccw'}
   },
   minThrottle: 1100.0,
   midThrottle: 1500.0,
