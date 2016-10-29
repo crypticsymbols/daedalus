@@ -2,7 +2,7 @@
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var HTTP_PORT = 8080;
+var HTTP_PORT = 1337;
 
 // vehicle setup
 opts = {
