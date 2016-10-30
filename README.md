@@ -23,3 +23,21 @@ X - up/down, + is up
 Y- left/right, + is right
 Xmoment: + is pitch up, - is pitch down
 YMoment - + is roll left (right up), - is roll left (left up)
+
+Platform / mode action notes
+
+Platform takes inputs
+mode: inputs -> what action to take
+platform: implement actions
+
+loiter:
+  rover: do nothing
+  boat: do nothing
+  copter: hover on point
+  plane: circle around point
+
+Go to point
+  rover: turn and forward
+  boat: turn and forward
+  copter: copter climb and goto
+  plane: plane climb and set course

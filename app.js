@@ -22,9 +22,9 @@ opts = {
 var copter = require('./lib/platforms/copter');
 var vehicle = new copter(opts);
 
-vehicle.on('controlInputUpdated', function(msg){
-  console.log('updated control inputs: \n', msg)
-})
+// vehicle.on('controlInputUpdated', function(msg){
+//   console.log('updated control inputs: \n', msg)
+// })
 
 vehicle.on('error', function(msg){
   console.log('VEHICLE ERROR: \n', msg)
