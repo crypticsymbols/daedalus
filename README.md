@@ -41,3 +41,23 @@ Go to point
   boat: turn and forward
   copter: copter climb and goto
   plane: plane climb and set course
+
+
+SETUP
+sudo dd bs=1m if=/Users/aaron/Downloads/emlid-raspbian-20160718.img of=/dev/rdisk2
+wifi info into wpa_supplicant.conf, 
+  also this into /etc/network/interfaces:
+  iface wlan0 inet dhcp
+    #wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+    wpa-ssid "whoop whoop"
+    wpa-psk "veritas77"
+net.ipv6.conf.all.disable_ipv6=1 > /etc/sysctl.d/local.conf
+pubkey to auth_keys
+# Install NVM
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
+source ~/.bashrc
+nvm install 5.11
+
+git clone https://github.com/crypticsymbols/daedalus.git
+cd daedalus
+npm install --production
