@@ -5,6 +5,7 @@ var camera, scene, renderer;
   var throttle;
   var plane;
   var levelPlane;
+  var gyroPlane;
   init();
   animate();
   function init() {
@@ -39,12 +40,16 @@ var camera, scene, renderer;
     var geometry = new THREE.PlaneGeometry( 200, 200 );
     var material = new THREE.MeshBasicMaterial( { color: 0x0000ff, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } );
     var material2 = new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } );
+    var material3 = new THREE.MeshBasicMaterial( { color: 0xff0000, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } );
     plane = new THREE.Mesh( geometry, material );
     levelPlane = new THREE.Mesh( geometry, material2 );
+    gyroPlane = new THREE.Mesh( geometry, material3 );
     plane.rotation.x = Math.PI/2
     levelPlane.rotation.x = Math.PI/2
+    gyroPlane.rotation.x = Math.PI/2
     plane.position.y = 100
     levelPlane.position.y = 150
+    gyroPlane.position.y = 180
 
     scene.add( m1 );
     scene.add( m2 );
@@ -53,6 +58,7 @@ var camera, scene, renderer;
     scene.add( throttle );
     scene.add( plane );
     scene.add( levelPlane );
+    scene.add( gyroPlane );
 
     m1.position.z = 80
     m1.position.y = 0
@@ -104,11 +110,17 @@ var camera, scene, renderer;
         plane.rotation.x = Math.atan(1/x)
         plane.rotation.y = (Math.PI / 2)+Math.atan(1/y)
       }
-      if (values && values.lX){
-        var x = values.lX;
-        var y = values.lY;
+      if (values && values.ax){
+        var x = values.ax;
+        var y = values.ay;
         levelPlane.rotation.x = Math.atan(1/x)
         levelPlane.rotation.y = (Math.PI / 2)+Math.atan(1/y) 
+      }
+      if (values && values.gx){
+        var x = values.gx;
+        var y = values.gy;
+        gyroPlane.rotation.x = Math.atan(1/x)
+        gyroPlane.rotation.y = (Math.PI / 2)+Math.atan(1/y) 
       }
     } catch (e){
       console.log(e);
