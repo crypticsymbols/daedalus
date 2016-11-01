@@ -110,13 +110,12 @@ var camera, scene, renderer;
         plane.rotation.x = Math.atan(1/x)
         plane.rotation.y = (Math.PI / 2)+Math.atan(1/y)
       }
-      if (values && values.ax){
+      if (values && typeof(values.ax) == 'number'){
         var x = values.ax;
         var y = values.ay;
         levelPlane.rotation.x = Math.atan(1/x)
         levelPlane.rotation.y = (Math.PI / 2)+Math.atan(1/y) 
-      }
-      if (values && values.gx){
+
         var x = values.gx;
         var y = values.gy;
         gyroPlane.rotation.x = Math.atan(1/x)
