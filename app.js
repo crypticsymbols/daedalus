@@ -22,9 +22,7 @@ opts = {
 var copter = require('./lib/platforms/copter');
 var vehicle = new copter(opts);
 
-// vehicle.on('controlInputUpdated', function(msg){
-//   console.log('updated control inputs: \n', msg)
-// })
+
 
 vehicle.on('error', function(msg){
   console.log('VEHICLE ERROR: \n', msg)
@@ -32,6 +30,10 @@ vehicle.on('error', function(msg){
 
 io.on('connection', function (socket) {
   console.log('socket connected');
+
+  process.on('log', function(data){
+    socket.emit('log', data)
+  })
 
   socket.on('flightCommand', function (data) {
     vehicle.updateControlInput(data.values);
@@ -43,12 +45,31 @@ io.on('connection', function (socket) {
 
 });
 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/static/index.html');
 });
 
 app.get('/gamepad.js', function (req, res) {
   res.sendFile(__dirname + '/static/gamepad.js');
+});
+
+app.get('/viz.js', function (req, res) {
+  res.sendFile(__dirname + '/static/viz.js');
+});
+
+app.get('/front.js', function (req, res) {
+  res.sendFile(__dirname + '/static/front.js');
 });
 
 server.listen(HTTP_PORT);

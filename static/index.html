@@ -2,8 +2,8 @@
 <html>
 <head>
   <title></title>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/gamepad.js"></script>
+  
+
 </head>
 <body>
   <input type="checkbox" id="calibrationMode" onClick='toggleCalibration()'>
@@ -13,79 +13,14 @@
   <img src="http://10.0.1.10:8080/stream/video.mjpeg" alt="image">
   <script>
 
-    var socket = io.connect();
-
-    var controlMap = {
-      throttle: 1,
-      yaw: 0,
-      pitch: 3,
-      roll: 2
-    }
-
-    var buttons = {
-      b: 1,
-      a: 0,
-      x: 2,
-      y: 3,
-    }
-
-    var controlState = {
-      attitude: {
-        x: 0,
-        y: 0,
-        zR: 0 // Yaw, idk
-      },
-      throttle: 0
-    }
-
-    gamepad(function(inputs){
-      var newControlState = {
-        attitude: {
-          x: inputs.axes[2]/10,
-          y: inputs.axes[3]/10,
-          zR: inputs.axes[0]/10,
-        },
-        throttle: (inputs.axes[1] - ( inputs.axes[1] * 2 ))*100
-      }
-      newControlState.buttons = inputs.buttons.map(function(v, i){
-        // if (v.pressed){
-        //   console.log(v.value, i)
-        // }
-        return {pressed: v.pressed, value: v.value}
-      });
-      handleStateUpdate(newControlState);
-    });
-
-    var calibrationMode = true;
-    function toggleCalibration(){
-      calibrationMode = !calibrationMode;
-      document.getElementById('calibrationMode').checked = calibrationMode;
-    }
-    document.getElementById('calibrationMode').checked = calibrationMode;
-
-    var flightMode = function(){
-      return !calibrationMode;
-    }
-
-    var handleStateUpdate = function(state){
-      if (JSON.stringify(state) != JSON.stringify(controlState) && flightMode()){
-        this.controlState = state;
-        sendState();
-      }
-    }
-
-    function sendCalibration(mode){
-      socket.emit('calibrationCommand', {
-        mode: mode
-      })
-    }
-
-    function sendState(){
-      socket.emit('flightCommand', { 
-        values: controlState
-      });
-    }
+    
 
   </script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/gamepad.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/threejs/r76/three.min.js"></script>
+  <script src="/viz.js"></script>
+  <script src="/front.js"></script>
+
 </body>
 </html>
