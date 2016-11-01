@@ -37,19 +37,25 @@ var camera, scene, renderer;
     throttle = new THREE.Mesh( cylinder, cylMaterial );
 
     // Plane
-    var geometry = new THREE.PlaneGeometry( 200, 200 );
+    var geometry = new THREE.BoxGeometry( 200, 2, 200 );
     var material = new THREE.MeshBasicMaterial( { color: 0x0000ff, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } );
     var material2 = new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } );
     var material3 = new THREE.MeshBasicMaterial( { color: 0xff0000, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } );
     plane = new THREE.Mesh( geometry, material );
     levelPlane = new THREE.Mesh( geometry, material2 );
     gyroPlane = new THREE.Mesh( geometry, material3 );
-    plane.rotation.x = Math.PI/2
-    levelPlane.rotation.x = Math.PI/2
-    gyroPlane.rotation.x = Math.PI/2
+    // plane.rotation.x = Math.PI/2
+    // levelPlane.rotation.x = Math.PI/2
+    // gyroPlane.rotation.x = Math.PI/2
     plane.position.y = 100
     levelPlane.position.y = 150
     gyroPlane.position.y = 180
+    // plane.rotation.z = 100
+    // levelPlane.rotation.z = 150
+    // gyroPlane.rotation.z = 180
+
+    // plane.updateMatrix();
+    // plane.geometry.applyMatrix( levelPlane.matrix );
 
     scene.add( m1 );
     scene.add( m2 );
@@ -105,21 +111,20 @@ var camera, scene, renderer;
         throttle.scale.y = pwmToPercent(values.throttle)
       }
       if (values && values.attitude){
-        var x = values.attitude.y;
-        var y = values.attitude.x;
-        plane.rotation.x = Math.atan(1/x)
-        plane.rotation.y = (Math.PI / 2)+Math.atan(1/y)
+        var x = values.attitude.x;
+        var y = values.attitude.y;
+        plane.rotation.x = -y
+        plane.rotation.z = x
       }
       if (values && typeof(values.ax) == 'number'){
         var x = values.ax;
         var y = values.ay;
-        levelPlane.rotation.x = Math.atan(1/x)
-        levelPlane.rotation.y = (Math.PI / 2)+Math.atan(1/y) 
-
+        levelPlane.rotation.x = -y
+        levelPlane.rotation.z = x
         var x = values.gx;
         var y = values.gy;
-        gyroPlane.rotation.x = Math.atan(1/x)
-        gyroPlane.rotation.y = (Math.PI / 2)+Math.atan(1/y) 
+        gyroPlane.rotation.x = -y
+        gyroPlane.rotation.z = x
       }
     } catch (e){
       console.log(e);
