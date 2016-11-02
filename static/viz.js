@@ -123,8 +123,8 @@ var camera, scene, renderer;
         levelPlane.rotation.z = x
         var x = values.gx;
         var y = values.gy;
-        gyroPlane.rotation.x = -y
-        gyroPlane.rotation.z = x
+        gyroPlane.rotation.z = -y
+        gyroPlane.rotation.x = -x
       }
     } catch (e){
       console.log(e);
