@@ -48,8 +48,8 @@ var camera, scene, renderer;
     // levelPlane.rotation.x = Math.PI/2
     // gyroPlane.rotation.x = Math.PI/2
     plane.position.y = 100
-    levelPlane.position.y = 150
-    gyroPlane.position.y = 180
+    levelPlane.position.y = 130
+    gyroPlane.position.y = 160
     // plane.rotation.z = 100
     // levelPlane.rotation.z = 150
     // gyroPlane.rotation.z = 180
