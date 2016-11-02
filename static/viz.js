@@ -1,12 +1,10 @@
 var camera, scene, renderer;
   var grid;
-//  var cylMesh;
-//  var motors = {};
-//  var throttle;
-//  var plane;
-//  var levelPlane;
-//  var gyroPlane;
-//
+
+  var inputScene;
+  var inputRenderer;
+  var inputCamera;
+
   var inputs = {
     attitude: {},
   }
@@ -22,14 +20,30 @@ var camera, scene, renderer;
   init();
   // animate();
   function init() {
+    //
+    // input viz setup
+    //
+    inputCamera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+    inputCamera.position.z = 350;
+    inputScene = new THREE.Scene();
+    inputScene.background = new THREE.Color( 0xffffff );
+    inputRenderer = new THREE.WebGLRenderer({alpha: true});
+    inputRenderer.setPixelRatio( window.devicePixelRatio );
+    inputRenderer.setSize( window.innerWidth/2, window.innerHeight/2 );
+    document.getElementById('input_viz').appendChild( inputRenderer.domElement );
+
+
+    //
+    // feedback setup
+    //
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
-    camera.position.z = 400;
+    camera.position.z = 350;
     scene = new THREE.Scene();
     scene.background = new THREE.Color( 0xffffff );
     renderer = new THREE.WebGLRenderer({alpha: true});
     renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( renderer.domElement );
+    renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
+    document.getElementById('feedback_viz').appendChild( renderer.domElement );
     window.addEventListener( 'resize', onWindowResize, false );
     //
     // base grid
@@ -37,7 +51,9 @@ var camera, scene, renderer;
     var gridSize = 100;
     var gridStep = 10;
     grid = new THREE.GridHelper( gridSize, gridStep );
+    inputGrid = new THREE.GridHelper( gridSize, gridStep );
     scene.add( grid );
+    inputScene.add( inputGrid );
     //
     // throttle cylinders
     //
@@ -109,7 +125,9 @@ var camera, scene, renderer;
     feedback.motors[6].position.x = 80
 
     scene.rotation.x =0.5;
+    inputScene.rotation.x =0.5;
     scene.rotation.y =0.5;
+    inputScene.rotation.y =0.5;
   }
 
   function onWindowResize() {
@@ -151,5 +169,6 @@ var camera, scene, renderer;
       console.log(e);
     }
     renderer.render( scene, camera );
+    inputRenderer.render( inputScene, inputCamera );
 
   }

@@ -2,7 +2,7 @@
 <html>
 <head>
   <title></title>
-  
+
 
 </head>
 <body>
@@ -11,11 +11,16 @@
   <button onclick='sendCalibration("mid")'>Calibrate MID</button>
   <button onclick='sendCalibration("high")'>Calibrate HIGH</button>
   <img src="http://10.0.1.10:8080/stream/video.mjpeg" alt="image">
-  <script>
 
-    
+  <table>
+    <tr>
+      <td id='input_viz'>
+      </td>
+      <td id='feedback_viz'>
+      </td>
+    </tr>
+  </table>
 
-  </script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/gamepad.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/threejs/r76/three.min.js"></script>
