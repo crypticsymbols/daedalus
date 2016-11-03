@@ -46,6 +46,11 @@ var camera, scene, renderer;
     document.getElementById('feedback_viz').appendChild( renderer.domElement );
     window.addEventListener( 'resize', onWindowResize, false );
     //
+    // axis helpers
+    //
+    scene.add( new THREE.AxisHelper( 500 ) );
+    inputScene.add( new THREE.AxisHelper( 500 ) );
+    //
     // base grid
     //
     var gridSize = 100;
