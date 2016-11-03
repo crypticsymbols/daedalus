@@ -50,6 +50,7 @@ var socket = io.connect();
     }
 
     var handleStateUpdate = function(state){
+      animateInput(state)
       if (JSON.stringify(state) != JSON.stringify(controlState) && flightMode()){
         this.controlState = state;
         sendState();
@@ -63,12 +64,12 @@ var socket = io.connect();
     }
 
     function sendState(){
-      socket.emit('flightCommand', { 
+      socket.emit('flightCommand', {
         values: controlState
       });
     }
 
-      socket.on('log', function(data){ 
+      socket.on('log', function(data){
         // console.log(data)
         animate(data)
       });

@@ -10,10 +10,7 @@
 var gamepad = function(callback){
 
   var callback = callback;
-  this.state = {};
 
-  var haveEvents = 'GamepadEvent' in window;
-  var haveWebkitEvents = 'WebKitGamepadEvent' in window;
   var controllers = {};
   var rAF = window.mozRequestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
@@ -56,14 +53,6 @@ var gamepad = function(callback){
     }
   }
 
-  if (haveEvents) {
-    window.addEventListener("gamepadconnected", connecthandler);
-    window.addEventListener("gamepaddisconnected", disconnecthandler);
-  } else if (haveWebkitEvents) {
-    window.addEventListener("webkitgamepadconnected", connecthandler);
-    window.addEventListener("webkitgamepaddisconnected", disconnecthandler);
-  } else {
-    setInterval(scangamepads, 500);
-  }
+  setInterval(scangamepads, 500);
 }
 

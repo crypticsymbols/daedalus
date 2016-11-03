@@ -51,8 +51,11 @@ var camera, scene, renderer;
     var gridSize = 100;
     var gridStep = 10;
     grid = new THREE.GridHelper( gridSize, gridStep );
-    inputGrid = new THREE.GridHelper( gridSize, gridStep );
     scene.add( grid );
+    //
+    // input grid
+    //
+    inputGrid = new THREE.GridHelper( gridSize, gridStep );
     inputScene.add( inputGrid );
     //
     // throttle cylinders
@@ -61,6 +64,11 @@ var camera, scene, renderer;
     var cylinder = new THREE.CylinderGeometry(20, 20, 80);
     cylinder.applyMatrix(new THREE.Matrix4().makeTranslation(0, 40, 0));
     //
+    // input throttle
+    //
+    var inputCylinder = new THREE.CylinderGeometry(20, 20, 80);
+    inputCylinder.applyMatrix(new THREE.Matrix4().makeTranslation(0, 40, 0));
+    //
     // set up motors
     //
     feedback.motors[3] = new THREE.Mesh( cylinder, cylMaterial );
@@ -68,11 +76,13 @@ var camera, scene, renderer;
     feedback.motors[5] = new THREE.Mesh( cylinder, cylMaterial );
     feedback.motors[6] = new THREE.Mesh( cylinder, cylMaterial );
     feedback.throttle  = new THREE.Mesh( cylinder, cylMaterial );
+    inputs.throttle  = new THREE.Mesh( inputCylinder, cylMaterial );
     scene.add( feedback.motors[3] )
     scene.add( feedback.motors[4] )
     scene.add( feedback.motors[5] )
     scene.add( feedback.motors[6] )
     scene.add( feedback.throttle )
+    inputScene.add( inputs.throttle )
     //
     // common Plane
     //
@@ -84,6 +94,12 @@ var camera, scene, renderer;
     feedback.attitudePlane = new THREE.Mesh( plane, material );
     feedback.attitudePlane.position.y = 100
     scene.add( feedback.attitudePlane )
+    //
+    // INPUT attitude plane
+    //
+    inputs.attitudePlane = new THREE.Mesh( plane, material );
+    inputs.attitudePlane.position.y = 100
+    inputScene.add( inputs.attitudePlane )
     //
     // Accelerometer plane
     //
@@ -169,6 +185,21 @@ var camera, scene, renderer;
       console.log(e);
     }
     renderer.render( scene, camera );
-    inputRenderer.render( inputScene, inputCamera );
-
   }
+  function animateInput(values){
+    try{
+      if (values && values.throttle){
+        inputs.throttle.scale.y = pwmToPercent(values.throttle)
+      }
+      if (values && values.attitude){
+        var x = values.attitude.x;
+        var y = values.attitude.y;
+        inputs.attitudePlane.rotation.x = -y
+        inputs.attitudePlane.rotation.z = x
+      }
+    } catch (e){
+      console.log(e);
+    }
+    inputRenderer.render( inputScene, inputCamera );
+  }
+
