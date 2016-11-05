@@ -50,11 +50,11 @@ var socket = io.connect();
     }
 
     var handleStateUpdate = function(state){
-      animateInput(state)
       if (JSON.stringify(state) != JSON.stringify(controlState) && flightMode()){
         this.controlState = state;
         sendState();
       }
+      visualize(state);
     }
 
     function sendCalibration(mode){
@@ -69,7 +69,18 @@ var socket = io.connect();
       });
     }
 
-      socket.on('log', function(data){
-        // console.log(data)
-        animate(data)
-      });
+    var viz, feedbackViz;
+    var visualize = function(data){
+      try{
+        viz.update(data);
+      } catch(e){
+        console.log(e);
+      }
+    }
+    socket.on('metadata', function(config){
+      viz = new inputViz('feedback_viz', config)
+      feedbackViz = new inputViz('feedback_viz', config, 'feedback')
+    });
+    socket.on('log', function(data){
+      feedbackViz.update(data)
+    });

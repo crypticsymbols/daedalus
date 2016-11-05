@@ -16,7 +16,6 @@ opts = {
   minThrottle: 1100.0,
   midThrottle: 1500.0,
   maxThrottle: 1900.0,
-  // maxAbsoluteDeflection: 0.1
 }
 
 var copter = require('./lib/platforms/copter');
@@ -29,7 +28,10 @@ vehicle.on('error', function(msg){
 })
 
 io.on('connection', function (socket) {
+
   console.log('socket connected');
+
+  socket.emit('metadata', opts);
 
   process.on('log', function(data){
     socket.emit('log', data)
@@ -66,6 +68,10 @@ app.get('/gamepad.js', function (req, res) {
 
 app.get('/viz.js', function (req, res) {
   res.sendFile(__dirname + '/static/viz.js');
+});
+
+app.get('/inputViz.js', function (req, res) {
+  res.sendFile(__dirname + '/static/inputViz.js');
 });
 
 app.get('/front.js', function (req, res) {

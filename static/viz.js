@@ -1,259 +1,155 @@
-var camera, scene, renderer;
-  var grid;
+var inputViz = function(element, config, mode){
 
-  var inputScene;
-  var inputRenderer;
-  var inputCamera;
-  var inputGrid;
+  var mode = mode || 'input';
+  var sceneX = Math.PI/2;
+  var sceneY = 0;
+  var sceneZ = -Math.PI/2;
+  var camera, scene, renderer, grid, plane;
+  var throttleCylinder, throttleCylinderMaterial;
+  var inputPlane, earthPlane, accelPlane, gyroPlane;
+  var motorMap = config.motorMap;
 
-  var inputs = {
-    attitude: {},
-  }
-  var feedback = {
+  var vehicle = {
+    // layoutDef: {},
     throttle: {},
     motors: {},
-    attitudePlane: {},
-    accelPlane: {},
-    gyroPlane: {},
-    levelPlane: {}
+    // attitudePlane: {},
+    // accelPlane: {},
+    // gyroPlane: {},
+    // levelPlane: {}
   }
 
-  init();
-  // animate();
-  function init() {
-    //
-    // input viz setup
-    //
-    inputCamera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
-    inputCamera.position.z = 350;
-    inputScene = new THREE.Scene();
-    inputScene.background = new THREE.Color( 0xffffff );
-    inputRenderer = new THREE.WebGLRenderer({alpha: true});
-    inputRenderer.setPixelRatio( window.devicePixelRatio );
-    inputRenderer.setSize( window.innerWidth/2, window.innerHeight/2 );
-    document.getElementById('input_viz').appendChild( inputRenderer.domElement );
-
-
-    //
-    // feedback setup
-    //
-    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
-    camera.position.z = 350;
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color( 0xffffff );
+  var setTheScene = function(){
     renderer = new THREE.WebGLRenderer({alpha: true});
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
-    document.getElementById('feedback_viz').appendChild( renderer.domElement );
+    document.getElementById(element).appendChild( renderer.domElement );
     window.addEventListener( 'resize', onWindowResize, false );
-    //
-    // axis helpers
-    //
-    scene.add( new THREE.AxisHelper( 500 ) );
-    inputScene.add( new THREE.AxisHelper( 500 ) );
-    //
-    // base grid
-    //
-    var gridSize = 100;
-    var gridStep = 10;
-    grid = new THREE.GridHelper( gridSize, gridStep );
-    scene.add( grid );
-    //
-    // input grid
-    //
-    inputGrid = new THREE.GridHelper( gridSize, gridStep );
-    inputScene.add( inputGrid );
-    //
-    // throttle cylinders
-    //
-    var cylMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true} );
-    var cylinder = new THREE.CylinderGeometry(20, 20, 80);
-    cylinder.applyMatrix(new THREE.Matrix4().makeTranslation(0, 40, 0));
-    //
-    // input throttle
-    //
-    var inputCylinder = new THREE.CylinderGeometry(20, 20, 80);
-    inputCylinder.applyMatrix(new THREE.Matrix4().makeTranslation(0, 40, 0));
-    //
-    // set up motors
-    //
-    feedback.motors[3] = new THREE.Mesh( cylinder, cylMaterial );
-    feedback.motors[4] = new THREE.Mesh( cylinder, cylMaterial );
-    feedback.motors[5] = new THREE.Mesh( cylinder, cylMaterial );
-    feedback.motors[6] = new THREE.Mesh( cylinder, cylMaterial );
-    feedback.throttle  = new THREE.Mesh( cylinder, cylMaterial );
-    scene.add( feedback.motors[3] )
-    scene.add( feedback.motors[4] )
-    scene.add( feedback.motors[5] )
-    scene.add( feedback.motors[6] )
-    scene.add( feedback.throttle )
-    //
-    // common Plane
-    //
-    var plane = new THREE.BoxGeometry( 200, 200, 2 );
-    //
-    // attitude plane
-    //
-    var material = new THREE.MeshBasicMaterial( { color: 0x0000ff, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } );
-    feedback.attitudePlane = new THREE.Mesh( plane, material );
-    feedback.attitudePlane.position.y = 100
-    scene.add( feedback.attitudePlane )
-    //
-    // INPUT attitude plane
-    //
-    inputs.attitudePlane = new THREE.Mesh( plane, material );
-    inputs.attitudePlane.position.z = -100
-    // inputs.attitudePlane.rotation.y = -100
-    inputScene.add( inputs.attitudePlane )
-    //
-    // Accelerometer plane
-    //
-    var material2 = new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } );
-    feedback.accelPlane = new THREE.Mesh( plane, material2 );
-    feedback.accelPlane.position.y = 130
-    scene.add( feedback.accelPlane )
-    //
-    // gyro plane
-    //
-    var material3 = new THREE.MeshBasicMaterial( { color: 0xff0000, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } );
-    feedback.gyroPlane = new THREE.Mesh( plane, material3 );
-    feedback.gyroPlane.position.y = 160
-    scene.add( feedback.gyroPlane )
-    // plane.rotation.x = Math.PI/2
-    // levelPlane.rotation.x = Math.PI/2
-    // gyroPlane.rotation.x = Math.PI/2
-    // levelPlane.rotation.z = 150
-    // gyroPlane.rotation.z = 180
-
-    // plane.updateMatrix();
-    // plane.plane.applyMatrix( levelPlane.matrix );
-
-    feedback.motors[3].position.z = 80
-    feedback.motors[3].position.y = 0
-    feedback.motors[3].position.x = 80
-
-    feedback.motors[4].position.z = -80
-    feedback.motors[4].position.y = -0
-    feedback.motors[4].position.x = -80
-
-    feedback.motors[5].position.z = 80
-    feedback.motors[5].position.y = -0
-    feedback.motors[5].position.x = -80
-
-    feedback.motors[6].position.z = -80
-    feedback.motors[6].position.y = -0
-    feedback.motors[6].position.x = 80
-
-    scene.rotation.x =0.5;
-    scene.rotation.y =0.5;
-
-    inputs.throttle  = new THREE.Mesh( inputCylinder, cylMaterial );
-    inputs.throttle.rotation.x = Math.PI/2;
-    inputScene.add( inputs.throttle )
-
-    var sceneX = Math.PI/2+0.5;
-    var sceneY = 0;
-    var sceneZ = -Math.PI/2-0.5;
-
-    inputScene.rotation.x = sceneX;
-    inputScene.rotation.y = sceneY;
-    inputScene.rotation.z = sceneZ;
-    inputGrid.rotation.x = Math.PI/2;
+    // 
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color( 0xffffff );  
+    scene.rotation.x = sceneX+0.5;
+    scene.rotation.y = sceneY;
+    scene.rotation.z = sceneZ-0.5;
+    // 
+    grid = new THREE.GridHelper( 100, 10 );
+    grid.rotation.x = sceneX;
+    scene.add( grid )
+    // 
+    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+    camera.position.z = 350;
+    // 
+    plane = new THREE.BoxGeometry( 200, 200, 2 );
+  }
+  var configElements = function(){
+    // Common throttle element
+    throttleCylinderMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true} );
+    throttleCylinder = new THREE.CylinderGeometry(20, 20, 80);
+    throttleCylinder.applyMatrix(new THREE.Matrix4().makeTranslation(0, 40, 0));
+    // 
+    // Plane elements
+    // 
+    inputPlane = new THREE.Mesh( plane, new THREE.MeshBasicMaterial( { color: 0x0000ff, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } ) );
+    inputPlane.position.z = -100
+    scene.add( inputPlane )
+    // 
+    accelPlane = new THREE.Mesh( plane, new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } ) );
+    accelPlane.position.z = -150;
+    scene.add( accelPlane )
+    // 
+    gyroPlane = new THREE.Mesh( plane, new THREE.MeshBasicMaterial( { color: 0xff0000, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } ) );
+    gyroPlane.position.z = -180;
+    scene.add( gyroPlane )
+    // 
+    // Throttle elements
+    // 
+    vehicle.throttle  = new THREE.Mesh( throttleCylinder, throttleCylinderMaterial );
+    scene.add( vehicle.throttle )
+    vehicle.throttle.rotation.x = sceneX;
+    // 
+    // per-vehicle motor config
+    // 
+    for (var pwmChannel in motorMap){
+      vehicle.motors[pwmChannel] = new THREE.Mesh( throttleCylinder, throttleCylinderMaterial );
+      vehicle.motors[pwmChannel].rotation.x = sceneX;
+      var xPos = motorMap[pwmChannel].x*80;
+      var yPos = motorMap[pwmChannel].y*80;
+      vehicle.motors[pwmChannel].position.x = xPos;
+      vehicle.motors[pwmChannel].position.y = yPos;
+      var sprite = makeTextSprite('PWM '+pwmChannel)
+      sprite.position.x = xPos;
+      sprite.position.y = yPos;
+      scene.add( vehicle.motors[pwmChannel] );
+      scene.add( sprite );
+    }
   }
 
+  function pwmToPercent(pwm){
+    return (pwm-1100)/(1900-1100)
+  }
+  
+  var update = function(values){
+    try{
+      if (values && values.throttle){
+        if (mode == 'feedback'){
+          vehicle.throttle.scale.y = -pwmToPercent(values.throttle);
+        } else {
+          vehicle.throttle.scale.y = -(values.throttle/100);
+        }
+      }
+      if (values && values.attitude){
+        var xR = values.attitude.xR;
+        var yR = values.attitude.yR;
+        var zR = values.attitude.zR;
+        inputPlane.rotation.x = xR
+        inputPlane.rotation.y = yR
+        inputPlane.rotation.z = zR
+      }
+      if (values && values.motor){
+        var i = values.motor.channel;
+        var t = pwmToPercent(values.motor.throttle)
+        vehicle.motors[i].scale.y = t;
+      }
+      renderer.render( scene, camera );
+    } catch (e){
+      console.log(e);
+    }
+  }
+  
   function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
   }
 
-  function pwmToPercent(pwm){
-    return (pwm-1100)/(1900-1100)
+  function makeTextSprite(message, opts) {
+    var parameters = opts || {};
+    var fontface = parameters.fontface || 'Helvetica';
+    var fontsize = parameters.fontsize || 70;
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    context.font = fontsize + "px " + fontface;
+    var metrics = context.measureText(message);
+    var textWidth = metrics.width;
+    context.fillStyle = 'rgba(0, 0, 0, 1.0)';
+    context.fillText(message, 0, fontsize);
+    var texture = new THREE.Texture(canvas)
+    texture.minFilter = THREE.LinearFilter;
+    texture.needsUpdate = true;
+    var spriteMaterial = new THREE.SpriteMaterial({
+        map: texture
+    });
+    var sprite = new THREE.Sprite(spriteMaterial);
+    sprite.scale.set(100, 50, 1.0);
+    return sprite;
   }
 
-  function myKeyPress(e){
-    var keynum;
+  setTheScene();
+  configElements();
+  renderer.render( scene, camera );
 
-    if(window.event) { // IE
-      keynum = e.keyCode;
-    }
-    // console.log(keynum)
-    // q = 81
-    // a = 65
-    //
-    // w = 87
-    // s = 83
-    //
-    // e = 69
-    // d = 68
-    var el = inputs.attitudePlane;
-    switch (keynum){
-      case 81:
-        el.rotation.x += 0.09;
-      case 65:
-        el.rotation.x -= 0.09;
-      case 87:
-        el.rotation.y += 0.09;
-      case 83:
-        el.rotation.y -= 0.09;
-      case 69:
-        el.rotation.z += 0.09;
-      case 68:
-        el.rotation.z -= 0.09;
-    }
-    // console.log(inputGrid.rotation.x, inputScene.rotation.y, inputScene.rotation.z)
+  return {
+    update: update
   }
-  document.addEventListener("keydown", myKeyPress, false);
-
-  function animate(values) {
-    try{
-      if (values && values.motor){
-        var i = values.motor.channel;
-        feedback.motors[i].scale.y = pwmToPercent(values.motor.throttle)
-      }
-      if (values && values.throttle){
-        feedback.throttle.scale.y = pwmToPercent(values.throttle)
-      }
-      if (values && values.attitude){
-        var xR = values.attitude.xR;
-        var yR = values.attitude.yR;
-        var zR = values.attitude.zR;
-        feedback.attitudePlane.rotation.x = xR
-        feedback.attitudePlane.rotation.y = yR
-        feedback.attitudePlane.rotation.z = zR
-      }
-      if (values && typeof(values.ax) == 'number'){
-        // var x = values.ax;
-        // var y = values.ay;
-        // feedback.accelPlane.rotation.x = -yR
-        // feedback.accelPlane.rotation.z = xR
-        // var x = values.gx;
-        // var y = values.gy;
-        // feedback.gyroPlane.rotation.z = -yR
-        // feedback.gyroPlane.rotation.x = -xR
-      }
-    } catch (e){
-      console.log(e);
-    }
-    renderer.render( scene, camera );
-  }
-  function animateInput(values){
-    try{
-      if (values && values.throttle){
-        // console.log(values.throttle)
-        inputs.throttle.scale.y = -(values.throttle/100);
-      }
-      if (values && values.attitude){
-        var xR = values.attitude.xR;
-        var yR = values.attitude.yR;
-        var zR = values.attitude.zR;
-        inputs.attitudePlane.rotation.x = xR
-        inputs.attitudePlane.rotation.y = yR
-        inputs.attitudePlane.rotation.z = zR
-      }
-    } catch (e){
-      console.log(e);
-    }
-    inputRenderer.render( inputScene, inputCamera );
-  }
+};
 
