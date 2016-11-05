@@ -186,19 +186,20 @@ var camera, scene, renderer;
     //
     // e = 69
     // d = 68
+    var el = inputs.attitudePlane;
     switch (keynum){
       case 81:
-        inputs.attitudePlane.rotation.x += 0.09;
+        el.rotation.x += 0.09;
       case 65:
-        inputs.attitudePlane.rotation.x -= 0.09;
+        el.rotation.x -= 0.09;
       case 87:
-        inputs.attitudePlane.rotation.y += 0.09;
+        el.rotation.y += 0.09;
       case 83:
-        inputs.attitudePlane.rotation.y -= 0.09;
+        el.rotation.y -= 0.09;
       case 69:
-        inputs.attitudePlane.rotation.z += 0.09;
+        el.rotation.z += 0.09;
       case 68:
-        inputs.attitudePlane.rotation.z -= 0.09;
+        el.rotation.z -= 0.09;
     }
     // console.log(inputGrid.rotation.x, inputScene.rotation.y, inputScene.rotation.z)
   }
