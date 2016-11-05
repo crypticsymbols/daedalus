@@ -46,8 +46,8 @@ io.on('connection', function (socket) {
     vehicle.updateControlInput(data.values);
   });
 
-  socket.on('calibrationCommand', function (data) {
-    vehicle.calibrationRoutine(data.mode);
+  socket.on('configCommand', function (data) {
+    vehicle.updateConfig(data);
   });
 
 });

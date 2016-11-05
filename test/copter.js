@@ -3,9 +3,16 @@ var expect    = require("chai").expect;
 var sinon    = require("sinon");
 
 var copter = require('../lib/platforms/copter')
+
+describe('vehicle state', function(){
+  it('is immutable');
+})
+
 describe("control inputs", function() {
 
-  it('sets correct PWM values', function(){
+  it('sets CORRECT PWM values')
+
+  it('sets PWM values', function(){
 
     var opts = {
       motorMap:{
