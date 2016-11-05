@@ -20,7 +20,7 @@ describe("getMotorThrottle", function() {
   it('scales throttle for yaw', function(){
 
     var inputs = {
-      attitude: {x: 0, y: 0, zR: -0.1},
+      attitude: {xR: 0, yR: 0, zR: -0.1},
       throttle: 1500
     }
     var mp1 = {x: 1, y: 1, rotation: 'cw'};
@@ -37,7 +37,7 @@ describe("getMotorThrottle", function() {
     var random = testUtil.random;
     for (var i = 0; i < 10000; i++) {
       var controlInputs = {
-        attitude: {x: random(-1.1, 1.1), y: random(-1.1, 1.1), zR: 0},
+        attitude: {xR: random(-1.1, 1.1), yR: random(-1.1, 1.1), zR: 0},
         throttle: random(1000, 2000, true)
       }
       var motorPoint = {x: random(-1.1, 1.1), y: random(-1.1, 1.1)};
@@ -49,7 +49,7 @@ describe("getMotorThrottle", function() {
   
   it("returns the correct scaled throttle value", function() {
     var controlInputs = {
-      attitude: {x: 0.04, y: -0.1, zR: 0},
+      attitude: {xR: 0.04, yR: -0.1, zR: 0},
       throttle: 1749
     }
     var motorPoint = {x: 0.9, y: -0.9}; // normal-ish
@@ -64,7 +64,7 @@ describe("getMotorThrottle", function() {
 
   it("handles negatives and zeros elegantly when control plane is flat", function() {
     var controlInputs = {
-      attitude: {x: 0.0, y: 0.0, zR: 0},
+      attitude: {xR: 0.0, yR: 0.0, zR: 0},
       throttle: 1749
     }
     var motorPoints = [
@@ -80,7 +80,7 @@ describe("getMotorThrottle", function() {
 
   it("can take integers or floats, and always returns a float", function() {
     var controlInputs = {
-      attitude: {x: 0.0, y: -1, zR: 0},
+      attitude: {xR: 0.0, yR: -1, zR: 0},
       throttle: 1749.0
     }
     var motorPoint = {x: -1, y: 1.1}; // normal-ish

@@ -206,9 +206,6 @@ var camera, scene, renderer;
   document.addEventListener("keydown", myKeyPress, false);
 
   function animate(values) {
-    // inputScene.rotation.z += 0.001;
-    // inputScene.rotation.y += 0.001;
-    // inputScene.rotation.x += 0.001;
     try{
       if (values && values.motor){
         var i = values.motor.channel;
@@ -218,20 +215,22 @@ var camera, scene, renderer;
         feedback.throttle.scale.y = pwmToPercent(values.throttle)
       }
       if (values && values.attitude){
-        var x = values.attitude.x;
-        var y = values.attitude.y;
-        feedback.attitudePlane.rotation.x = -y
-        feedback.attitudePlane.rotation.z = x
+        var xR = values.attitude.xR;
+        var yR = values.attitude.yR;
+        var zR = values.attitude.zR;
+        feedback.attitudePlane.rotation.x = xR
+        feedback.attitudePlane.rotation.y = yR
+        feedback.attitudePlane.rotation.z = zR
       }
       if (values && typeof(values.ax) == 'number'){
-        var x = values.ax;
-        var y = values.ay;
-        feedback.accelPlane.rotation.x = -y
-        feedback.accelPlane.rotation.z = x
-        var x = values.gx;
-        var y = values.gy;
-        feedback.gyroPlane.rotation.z = -y
-        feedback.gyroPlane.rotation.x = -x
+        // var x = values.ax;
+        // var y = values.ay;
+        // feedback.accelPlane.rotation.x = -yR
+        // feedback.accelPlane.rotation.z = xR
+        // var x = values.gx;
+        // var y = values.gy;
+        // feedback.gyroPlane.rotation.z = -yR
+        // feedback.gyroPlane.rotation.x = -xR
       }
     } catch (e){
       console.log(e);
@@ -241,7 +240,8 @@ var camera, scene, renderer;
   function animateInput(values){
     try{
       if (values && values.throttle){
-        inputs.throttle.scale.y = values.throttle;
+        // console.log(values.throttle)
+        inputs.throttle.scale.y = -(values.throttle/100);
       }
       if (values && values.attitude){
         var xR = values.attitude.xR;

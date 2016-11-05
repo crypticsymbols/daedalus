@@ -30,7 +30,7 @@ var socket = io.connect();
           yR: inputs.axes[3],
           zR: inputs.axes[0],
         },
-        throttle: inputs.axes[1]
+        throttle: -(inputs.axes[1]*100)
       }
       newControlState.buttons = inputs.buttons.map(function(v, i){
         return {pressed: v.pressed, value: v.value}

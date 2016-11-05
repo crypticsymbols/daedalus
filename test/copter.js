@@ -28,7 +28,7 @@ describe("control inputs", function() {
     }
 
     vehicle.updateControlInput({
-      attitude: {x: 0, y: 0, z: 0},
+      attitude: {xR: 0, yR: 0, zR: 0},
       throttle: 1777
     });
 
