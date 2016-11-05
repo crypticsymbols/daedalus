@@ -19,21 +19,21 @@ var inputViz = function(element, config, mode){
     renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
     document.getElementById(element).appendChild( renderer.domElement );
     window.addEventListener( 'resize', onWindowResize, false );
-    // 
+    //
     scene = new THREE.Scene();
-    scene.background = new THREE.Color( 0xffffff );  
+    scene.background = new THREE.Color( 0xffffff );
     scene.rotation.x = sceneX+0.5;
     scene.rotation.y = sceneY;
     scene.rotation.z = sceneZ-0.6;
     scene.add( new THREE.AxisHelper( 500 ) );
-    // 
+    //
     grid = new THREE.GridHelper( 100, 10 );
     grid.rotation.x = sceneX;
     scene.add( grid )
-    // 
+    //
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
     camera.position.z = 350;
-    // 
+    //
     plane = new THREE.BoxGeometry( 200, 200, 2 );
   }
   var configElements = function(){
@@ -41,29 +41,29 @@ var inputViz = function(element, config, mode){
     throttleCylinderMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true} );
     throttleCylinder = new THREE.CylinderGeometry(20, 20, 80);
     throttleCylinder.applyMatrix(new THREE.Matrix4().makeTranslation(0, -40, 0));
-    // 
+    //
     // Plane elements
-    // 
+    //
     inputPlane = new THREE.Mesh( plane, new THREE.MeshBasicMaterial( { color: 0x0000ff, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } ) );
     inputPlane.position.z = -100
     scene.add( inputPlane )
-    // 
+    //
     accelPlane = new THREE.Mesh( plane, new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } ) );
     accelPlane.position.z = -150;
     scene.add( accelPlane )
-    // 
+    //
     gyroPlane = new THREE.Mesh( plane, new THREE.MeshBasicMaterial( { color: 0xff0000, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } ) );
     gyroPlane.position.z = -180;
     scene.add( gyroPlane )
-    // 
+    //
     // Throttle elements
-    // 
+    //
     vehicle.throttle  = new THREE.Mesh( throttleCylinder, throttleCylinderMaterial );
     scene.add( vehicle.throttle )
     vehicle.throttle.rotation.x = sceneX;
-    // 
+    //
     // per-vehicle motor config
-    // 
+    //
     for (var pwmChannel in motorMap){
       vehicle.motors[pwmChannel] = new THREE.Mesh( throttleCylinder, throttleCylinderMaterial );
       vehicle.motors[pwmChannel].rotation.x = sceneX;
@@ -82,7 +82,7 @@ var inputViz = function(element, config, mode){
   function pwmToPercent(pwm){
     return (pwm-1100)/(1900-1100)
   }
-  
+
   var update = function(values){
     try{
       if (values && values.throttle){
@@ -110,7 +110,7 @@ var inputViz = function(element, config, mode){
       console.log(e);
     }
   }
-  
+
   function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
