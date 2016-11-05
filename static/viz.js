@@ -105,6 +105,14 @@ var inputViz = function(element, config, mode){
         var t = pwmToPercent(values.motor.throttle)
         vehicle.motors[i].scale.y = t;
       }
+      if(values && values.imu){
+        var v = values.imu;
+        accelPlane.rotation.x = v.ax
+        accelPlane.rotation.y = v.ay
+        gyroPlane.rotation.x = v.gx
+        gyroPlane.rotation.y = v.gy
+        // accelPlane.rotation.z = v.az
+      }
       renderer.render( scene, camera );
     } catch (e){
       console.log(e);
