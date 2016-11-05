@@ -17,6 +17,8 @@ describe("getMotorThrottle", function() {
 
   });
 
+  it('needs more tests specifically on control mixing')
+
   it('scales throttle for yaw', function(){
 
     var inputs = {
@@ -53,13 +55,13 @@ describe("getMotorThrottle", function() {
       throttle: 1749
     }
     var motorPoint = {x: 0.9, y: -0.9}; // normal-ish
-    expect(plm.getMotorThrottle(controlInputs, motorPoint)).to.eql(1771.0374);
+    expect(plm.getMotorThrottle(controlInputs, motorPoint)).to.eql(1739.5554);
 
     var motorPoint = {x: 0.1, y: -0.1}; // real close
-    expect(plm.getMotorThrottle(controlInputs, motorPoint)).to.eql(1751.4486);
+    expect(plm.getMotorThrottle(controlInputs, motorPoint)).to.eql(1747.9506);
 
     var motorPoint = {x: 1.9, y: -1.9}; // far out
-    expect(plm.getMotorThrottle(controlInputs, motorPoint)).to.eql(1795.5234);
+    expect(plm.getMotorThrottle(controlInputs, motorPoint)).to.eql(1729.0614);
   });
 
   it("handles negatives and zeros elegantly when control plane is flat", function() {
@@ -84,11 +86,11 @@ describe("getMotorThrottle", function() {
       throttle: 1749.0
     }
     var motorPoint = {x: -1, y: 1.1}; // normal-ish
-    expect(plm.getMotorThrottle(controlInputs, motorPoint)).to.eql(1556.61);
-    var motorPoint = {x: 0, y: -0.1}; // real close
-    expect(plm.getMotorThrottle(controlInputs, motorPoint)).to.eql(1766.49);
-    var motorPoint = {x: -0, y: -1}; // far out
     expect(plm.getMotorThrottle(controlInputs, motorPoint)).to.eql(1923.9);
+    var motorPoint = {x: 0, y: -0.1}; // real close
+    expect(plm.getMotorThrottle(controlInputs, motorPoint)).to.eql(1749);
+    var motorPoint = {x: -0, y: -1}; // far out
+    expect(plm.getMotorThrottle(controlInputs, motorPoint)).to.eql(1749);
   });
   
 });

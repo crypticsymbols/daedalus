@@ -10,15 +10,9 @@ var inputViz = function(element, config, mode){
   var motorMap = config.motorMap;
 
   var vehicle = {
-    // layoutDef: {},
     throttle: {},
     motors: {},
-    // attitudePlane: {},
-    // accelPlane: {},
-    // gyroPlane: {},
-    // levelPlane: {}
   }
-
   var setTheScene = function(){
     renderer = new THREE.WebGLRenderer({alpha: true});
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -30,7 +24,8 @@ var inputViz = function(element, config, mode){
     scene.background = new THREE.Color( 0xffffff );  
     scene.rotation.x = sceneX+0.5;
     scene.rotation.y = sceneY;
-    scene.rotation.z = sceneZ-0.5;
+    scene.rotation.z = sceneZ-0.6;
+    scene.add( new THREE.AxisHelper( 500 ) );
     // 
     grid = new THREE.GridHelper( 100, 10 );
     grid.rotation.x = sceneX;
@@ -45,7 +40,7 @@ var inputViz = function(element, config, mode){
     // Common throttle element
     throttleCylinderMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true} );
     throttleCylinder = new THREE.CylinderGeometry(20, 20, 80);
-    throttleCylinder.applyMatrix(new THREE.Matrix4().makeTranslation(0, 40, 0));
+    throttleCylinder.applyMatrix(new THREE.Matrix4().makeTranslation(0, -40, 0));
     // 
     // Plane elements
     // 
@@ -92,9 +87,9 @@ var inputViz = function(element, config, mode){
     try{
       if (values && values.throttle){
         if (mode == 'feedback'){
-          vehicle.throttle.scale.y = -pwmToPercent(values.throttle);
+          vehicle.throttle.scale.y = pwmToPercent(values.throttle);
         } else {
-          vehicle.throttle.scale.y = -(values.throttle/100);
+          vehicle.throttle.scale.y = (values.throttle/100);
         }
       }
       if (values && values.attitude){
