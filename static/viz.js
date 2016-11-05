@@ -4,6 +4,7 @@ var camera, scene, renderer;
   var inputScene;
   var inputRenderer;
   var inputCamera;
+  var inputGrid;
 
   var inputs = {
     attitude: {},
@@ -81,17 +82,15 @@ var camera, scene, renderer;
     feedback.motors[5] = new THREE.Mesh( cylinder, cylMaterial );
     feedback.motors[6] = new THREE.Mesh( cylinder, cylMaterial );
     feedback.throttle  = new THREE.Mesh( cylinder, cylMaterial );
-    inputs.throttle  = new THREE.Mesh( inputCylinder, cylMaterial );
     scene.add( feedback.motors[3] )
     scene.add( feedback.motors[4] )
     scene.add( feedback.motors[5] )
     scene.add( feedback.motors[6] )
     scene.add( feedback.throttle )
-    inputScene.add( inputs.throttle )
     //
     // common Plane
     //
-    var plane = new THREE.BoxGeometry( 200, 2, 200 );
+    var plane = new THREE.BoxGeometry( 200, 200, 2 );
     //
     // attitude plane
     //
@@ -103,7 +102,8 @@ var camera, scene, renderer;
     // INPUT attitude plane
     //
     inputs.attitudePlane = new THREE.Mesh( plane, material );
-    inputs.attitudePlane.position.y = 100
+    inputs.attitudePlane.position.z = -100
+    // inputs.attitudePlane.rotation.y = -100
     inputScene.add( inputs.attitudePlane )
     //
     // Accelerometer plane
@@ -122,7 +122,6 @@ var camera, scene, renderer;
     // plane.rotation.x = Math.PI/2
     // levelPlane.rotation.x = Math.PI/2
     // gyroPlane.rotation.x = Math.PI/2
-    // plane.rotation.z = 100
     // levelPlane.rotation.z = 150
     // gyroPlane.rotation.z = 180
 
@@ -146,9 +145,20 @@ var camera, scene, renderer;
     feedback.motors[6].position.x = 80
 
     scene.rotation.x =0.5;
-    inputScene.rotation.x =0.5;
     scene.rotation.y =0.5;
-    inputScene.rotation.y =0.5;
+
+    inputs.throttle  = new THREE.Mesh( inputCylinder, cylMaterial );
+    inputs.throttle.rotation.x = Math.PI/2;
+    inputScene.add( inputs.throttle )
+
+    var sceneX = Math.PI/2+0.5;
+    var sceneY = 0;
+    var sceneZ = -Math.PI/2-0.5;
+
+    inputScene.rotation.x = sceneX;
+    inputScene.rotation.y = sceneY;
+    inputScene.rotation.z = sceneZ;
+    inputGrid.rotation.x = Math.PI/2;
   }
 
   function onWindowResize() {
@@ -161,7 +171,43 @@ var camera, scene, renderer;
     return (pwm-1100)/(1900-1100)
   }
 
+  function myKeyPress(e){
+    var keynum;
+
+    if(window.event) { // IE
+      keynum = e.keyCode;
+    }
+    // console.log(keynum)
+    // q = 81
+    // a = 65
+    //
+    // w = 87
+    // s = 83
+    //
+    // e = 69
+    // d = 68
+    switch (keynum){
+      case 81:
+        inputs.attitudePlane.rotation.x += 0.09;
+      case 65:
+        inputs.attitudePlane.rotation.x -= 0.09;
+      case 87:
+        inputs.attitudePlane.rotation.y += 0.09;
+      case 83:
+        inputs.attitudePlane.rotation.y -= 0.09;
+      case 69:
+        inputs.attitudePlane.rotation.z += 0.09;
+      case 68:
+        inputs.attitudePlane.rotation.z -= 0.09;
+    }
+    // console.log(inputGrid.rotation.x, inputScene.rotation.y, inputScene.rotation.z)
+  }
+  document.addEventListener("keydown", myKeyPress, false);
+
   function animate(values) {
+    // inputScene.rotation.z += 0.001;
+    // inputScene.rotation.y += 0.001;
+    // inputScene.rotation.x += 0.001;
     try{
       if (values && values.motor){
         var i = values.motor.channel;
@@ -194,13 +240,15 @@ var camera, scene, renderer;
   function animateInput(values){
     try{
       if (values && values.throttle){
-        inputs.throttle.scale.y = pwmToPercent(values.throttle)
+        inputs.throttle.scale.y = values.throttle;
       }
       if (values && values.attitude){
-        var x = values.attitude.x;
-        var y = values.attitude.y;
-        inputs.attitudePlane.rotation.x = -y
-        inputs.attitudePlane.rotation.z = x
+        var xR = values.attitude.xR;
+        var yR = values.attitude.yR;
+        var zR = values.attitude.zR;
+        inputs.attitudePlane.rotation.x = xR
+        inputs.attitudePlane.rotation.y = yR
+        inputs.attitudePlane.rotation.z = zR
       }
     } catch (e){
       console.log(e);

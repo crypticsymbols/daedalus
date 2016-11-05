@@ -26,11 +26,11 @@ var socket = io.connect();
     gamepad(function(inputs){
       var newControlState = {
         attitude: {
-          x: inputs.axes[2]/10,
-          y: inputs.axes[3]/10,
-          zR: inputs.axes[0]/10,
+          xR: inputs.axes[2],
+          yR: inputs.axes[3],
+          zR: inputs.axes[0],
         },
-        throttle: (inputs.axes[1] - ( inputs.axes[1] * 2 ))*100
+        throttle: inputs.axes[1]
       }
       newControlState.buttons = inputs.buttons.map(function(v, i){
         return {pressed: v.pressed, value: v.value}
