@@ -15,9 +15,16 @@ describe("control inputs", function() {
         5: {y: 1, x: -1},
         6: {y: -1, x: 1}
       },
-      minThrottle: 1100.0,
-      midThrottle: 1500.0,
-      maxThrottle: 1900.0
+      throttle:{
+        min: 1100,
+        mid: 1500,
+        max: 1900
+      },
+      axisScale: {
+        xR: 1,
+        yR: 1,
+        zR: 1
+      }
     }
 
     var vehicle = new copter(opts);
@@ -28,12 +35,12 @@ describe("control inputs", function() {
     }
 
     vehicle.updateControlInput({
-      attitude: {x: 0, y: 0, z: 0},
+      attitude: {xR: 0, yR: 0, zR: 0},
       throttle: 1777
     });
 
     expect(spy.callCount).to.be.equal(4);
-    
+
   });
 
 });
