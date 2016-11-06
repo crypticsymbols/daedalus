@@ -8,6 +8,9 @@ var inputViz = function(element, config, mode){
   var throttleCylinder, throttleCylinderMaterial;
   var inputPlane, earthPlane, accelPlane, gyroPlane;
   var motorMap = config.motorMap;
+  // shotty dom handling...
+  var height = 300;
+  var domContainer;
 
   var vehicle = {
     throttle: {},
@@ -16,8 +19,8 @@ var inputViz = function(element, config, mode){
   var setTheScene = function(){
     renderer = new THREE.WebGLRenderer({alpha: true});
     renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
-    document.getElementById(element).appendChild( renderer.domElement );
+    renderer.setSize( domContainer.offsetWidth, domContainer.offsetHeight );
+    domContainer.appendChild( renderer.domElement );
     window.addEventListener( 'resize', onWindowResize, false );
     //
     scene = new THREE.Scene();
@@ -31,7 +34,7 @@ var inputViz = function(element, config, mode){
     grid.rotation.x = sceneX;
     scene.add( grid )
     //
-    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+    camera = new THREE.PerspectiveCamera( 70, domContainer.offsetWidth / domContainer.offsetHeight, 1, 1000 );
     camera.position.z = 350;
     //
     plane = new THREE.BoxGeometry( 200, 200, 2 );
@@ -120,9 +123,9 @@ var inputViz = function(element, config, mode){
   }
 
   function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = domContainer.offsetWidth / domContainer.offsetHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( domContainer.offsetWidth, domContainer.offsetHeight );
   }
 
   function makeTextSprite(message, opts) {
@@ -146,10 +149,14 @@ var inputViz = function(element, config, mode){
     sprite.scale.set(100, 50, 1.0);
     return sprite;
   }
-
-  setTheScene();
-  configElements();
-  renderer.render( scene, camera );
+  var init = function(){
+    domContainer = document.getElementById(element);
+    domContainer.setAttribute("style","width:50%; height:"+height+'px;');
+    setTheScene();
+    configElements();
+    renderer.render( scene, camera );
+  }
+    init();
 
   return {
     update: update

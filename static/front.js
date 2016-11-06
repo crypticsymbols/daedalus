@@ -74,7 +74,7 @@ var visualize = function(data){
   }
 }
 socket.on('metadata', function(config){
-  viz = new inputViz('feedback_viz', config)
+  viz = new inputViz('input_viz', config)
   feedbackViz = new inputViz('feedback_viz', config, 'feedback')
 });
 socket.on('log', function(data){
