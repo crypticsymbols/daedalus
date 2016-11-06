@@ -51,13 +51,15 @@ var inputViz = function(element, config, mode){
     inputPlane.position.z = -100
     scene.add( inputPlane )
     //
-    accelPlane = new THREE.Mesh( plane, new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } ) );
-    accelPlane.position.z = -150;
-    scene.add( accelPlane )
-    //
-    gyroPlane = new THREE.Mesh( plane, new THREE.MeshBasicMaterial( { color: 0xff0000, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } ) );
-    gyroPlane.position.z = -180;
-    scene.add( gyroPlane )
+    if (mode === 'feedback'){
+      accelPlane = new THREE.Mesh( plane, new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } ) );
+      accelPlane.position.z = -150;
+      scene.add( accelPlane )
+      //
+      gyroPlane = new THREE.Mesh( plane, new THREE.MeshBasicMaterial( { color: 0xff0000, side: THREE.DoubleSide, transparent: true, opacity: 0.5 } ) );
+      gyroPlane.position.z = -180;
+      scene.add( gyroPlane )
+    }
     //
     // Throttle elements
     //
@@ -67,18 +69,20 @@ var inputViz = function(element, config, mode){
     //
     // per-vehicle motor config
     //
-    for (var pwmChannel in motorMap){
-      vehicle.motors[pwmChannel] = new THREE.Mesh( throttleCylinder, throttleCylinderMaterial );
-      vehicle.motors[pwmChannel].rotation.x = sceneX;
-      var xPos = motorMap[pwmChannel].x*80;
-      var yPos = motorMap[pwmChannel].y*80;
-      vehicle.motors[pwmChannel].position.x = xPos;
-      vehicle.motors[pwmChannel].position.y = yPos;
-      var sprite = makeTextSprite('PWM '+pwmChannel)
-      sprite.position.x = xPos;
-      sprite.position.y = yPos;
-      scene.add( vehicle.motors[pwmChannel] );
-      scene.add( sprite );
+    if (mode === 'feedback'){
+      for (var pwmChannel in motorMap){
+        vehicle.motors[pwmChannel] = new THREE.Mesh( throttleCylinder, throttleCylinderMaterial );
+        vehicle.motors[pwmChannel].rotation.x = sceneX;
+        var xPos = motorMap[pwmChannel].x*80;
+        var yPos = motorMap[pwmChannel].y*80;
+        vehicle.motors[pwmChannel].position.x = xPos;
+        vehicle.motors[pwmChannel].position.y = yPos;
+        var sprite = makeTextSprite('PWM '+pwmChannel)
+        sprite.position.x = xPos;
+        sprite.position.y = yPos;
+        scene.add( vehicle.motors[pwmChannel] );
+        scene.add( sprite );
+      }
     }
   }
 
@@ -143,7 +147,7 @@ var inputViz = function(element, config, mode){
     texture.minFilter = THREE.LinearFilter;
     texture.needsUpdate = true;
     var spriteMaterial = new THREE.SpriteMaterial({
-        map: texture
+      map: texture
     });
     var sprite = new THREE.Sprite(spriteMaterial);
     sprite.scale.set(100, 50, 1.0);
@@ -159,7 +163,7 @@ var inputViz = function(element, config, mode){
     configElements();
     renderer.render( scene, camera );
   }
-    init();
+  init();
 
   return {
     update: update
