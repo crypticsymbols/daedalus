@@ -152,6 +152,9 @@ var inputViz = function(element, config, mode){
   var init = function(){
     domContainer = document.getElementById(element);
     domContainer.setAttribute("style","width:50%; height:"+height+'px;');
+    while(domContainer.lastChild){
+      domContainer.removeChild(domContainer.lastChild);
+    }
     setTheScene();
     configElements();
     renderer.render( scene, camera );
