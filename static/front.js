@@ -24,29 +24,39 @@ gamepad(function(inputs){
   handleStateUpdate(newControlState);
 });
 
-var calibrationMode = false;
-function toggleCalibration(){
-  calibrationMode = !calibrationMode;
-  document.getElementById('calibrationMode').checked = calibrationMode;
-}
-document.getElementById('calibrationMode').checked = calibrationMode;
+// var calibrationMode = false;
+// function toggleCalibration(){
+  // calibrationMode = !calibrationMode;
+  // document.getElementById('calibrationMode').checked = calibrationMode;
+// }
+// document.getElementById('calibrationMode').checked = calibrationMode;
 
-var flightMode = function(){
-  return !calibrationMode;
+// var flightMode = function(){
+  // return !calibrationMode;
+// }
+var setMode = function(name){
+  var combo = name.split('-');
+  var mode = {
+    name: combo[0]
+  }
+  if (combo[1]){
+    mode.options = {
+      stage: combo[1]
+    }
+  }
+  setConfig(mode)
 }
 
 var handleStateUpdate = function(state){
-  if (JSON.stringify(state) != JSON.stringify(controlState) && flightMode()){
+  if (JSON.stringify(state) != JSON.stringify(controlState)){
     this.controlState = state;
     sendState();
   }
   visualize(state);
 }
 
-function sendCalibration(mode){
-  socket.emit('calibrationCommand', {
-    mode: mode
-  })
+function setConfig(config){
+  socket.emit('configCommand', config);
 }
 
 function sendState(){
@@ -64,7 +74,7 @@ var visualize = function(data){
   }
 }
 socket.on('metadata', function(config){
-  viz = new inputViz('feedback_viz', config)
+  viz = new inputViz('input_viz', config)
   feedbackViz = new inputViz('feedback_viz', config, 'feedback')
 });
 socket.on('log', function(data){

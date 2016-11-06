@@ -1,29 +1,46 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title></title>
-</head>
-<body>
-  <input type="checkbox" id="calibrationMode" onClick='toggleCalibration()'>
-  <button onclick='sendCalibration("low")'>Calibrate LOW</button>
-  <button onclick='sendCalibration("mid")'>Calibrate MID</button>
-  <button onclick='sendCalibration("high")'>Calibrate HIGH</button>
-  <img src="http://10.0.1.10:8080/stream/video.mjpeg" alt="image">
+  <head>
+    <title></title>
+    <style>
+      table{ width:100%; table-layout:fixed; }
+      img {max-width:100%; max-height:100%}
+      td {vertical-align:top;text-align:right}
+    </style>
+  </head>
+  <body>
 
-  <table>
-    <tr>
-      <td id='input_viz'>
-      </td>
-      <td id='feedback_viz'>
-      </td>
-    </tr>
-  </table>
+    <table>
+      <tr>
+        <td><img width=480 height=320 src="http://10.0.1.10:8080/stream/video.mjpeg" alt="image"></td>
+        <td>
+          <label>vehicle mode</label>
+          <select onChange="setMode(this.value)">
+            <optgroup label='flight'>
+              <option value='manual'>Manual</option>
+              <option value='stabilize'>Stabilize</option>
+            </optgroup>
+            <optgroup label='calibration'>
+              <option value='calibration-min'>Calibration - low</option>
+              <option value='calibration-mid'>Calibration - mid</option>
+              <option value='calibration-max'>Calibration - high</option>
+            </optgroup>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td class='visualizer' id='input_viz'>
+        </td>
+        <td class='visualizer' id='feedback_viz'>
+        </td>
+      </tr>
+    </table>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/gamepad.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/threejs/r76/three.min.js"></script>
-  <script src="/viz.js"></script>
-  <script src="/front.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/gamepad.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/threejs/r76/three.min.js"></script>
+    <script src="/viz.js"></script>
+    <script src="/front.js"></script>
 
-</body>
+  </body>
 </html>
