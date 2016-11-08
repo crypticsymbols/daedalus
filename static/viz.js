@@ -1,3 +1,4 @@
+/* eslint-env browser */
 var inputViz = function(element, config, mode){
 
   var mode = mode || 'input';
@@ -8,7 +9,6 @@ var inputViz = function(element, config, mode){
   var throttleCylinder, throttleCylinderMaterial;
   var inputPlane, earthPlane, accelPlane, gyroPlane;
   var motorMap = config.motorMap;
-  // shotty dom handling...
   var height = 300;
   var domContainer;
 
@@ -107,51 +107,51 @@ var inputViz = function(element, config, mode){
         inputPlane.rotation.y = yR
         inputPlane.rotation.z = zR
       }
-      if (values && values.motor){
-        var i = values.motor.channel;
+      if (values && values.motor) {
+        var i = values.motor.channel
         var t = pwmToPercent(values.motor.throttle)
-        vehicle.motors[i].scale.y = t;
+        vehicle.motors[i].scale.y = t
       }
-      if(values && values.imu){
-        var v = values.imu;
-        accelPlane.rotation.x = v.ax
-        accelPlane.rotation.y = v.ay
-        gyroPlane.rotation.x = v.gx
-        gyroPlane.rotation.y = v.gy
+      if (values && values.imu) {
+        var v = values.imu
+        accelPlane.rotation.x = -v.ax/10
+        accelPlane.rotation.y = v.ay/10
+        gyroPlane.rotation.x = v.gy
+        gyroPlane.rotation.y = v.gx
         // accelPlane.rotation.z = v.az
       }
-      renderer.render( scene, camera );
-    } catch (e){
-      console.log(e);
+      renderer.render(scene, camera)
+    } catch (e) {
+      console.log(e)
     }
   }
 
   function onWindowResize() {
-    camera.aspect = domContainer.offsetWidth / domContainer.offsetHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize( domContainer.offsetWidth, domContainer.offsetHeight );
+    camera.aspect = domContainer.offsetWidth / domContainer.offsetHeight
+    camera.updateProjectionMatrix()
+    renderer.setSize(domContainer.offsetWidth, domContainer.offsetHeight)
   }
 
   function makeTextSprite(message, opts) {
-    var parameters = opts || {};
-    var fontface = parameters.fontface || 'Helvetica';
-    var fontsize = parameters.fontsize || 70;
-    var canvas = document.createElement('canvas');
-    var context = canvas.getContext('2d');
-    context.font = fontsize + "px " + fontface;
-    var metrics = context.measureText(message);
-    var textWidth = metrics.width;
-    context.fillStyle = 'rgba(0, 0, 0, 1.0)';
-    context.fillText(message, 0, fontsize);
+    var parameters = opts || {}
+    var fontface = parameters.fontface || 'Helvetica'
+    var fontsize = parameters.fontsize || 70
+    var canvas = document.createElement('canvas')
+    var context = canvas.getContext('2d')
+    context.font = fontsize + 'px ' + fontface
+    var metrics = context.measureText(message)
+    var textWidth = metrics.width
+    context.fillStyle = 'rgba(0, 0, 0, 1.0)'
+    context.fillText(message, 0, fontsize)
     var texture = new THREE.Texture(canvas)
-    texture.minFilter = THREE.LinearFilter;
-    texture.needsUpdate = true;
+    texture.minFilter = THREE.LinearFilter
+    texture.needsUpdate = true
     var spriteMaterial = new THREE.SpriteMaterial({
       map: texture
-    });
-    var sprite = new THREE.Sprite(spriteMaterial);
-    sprite.scale.set(100, 50, 1.0);
-    return sprite;
+    })
+    var sprite = new THREE.Sprite(spriteMaterial)
+    sprite.scale.set(100, 50, 1.0)
+    return sprite
   }
   var init = function(){
     domContainer = document.getElementById(element);

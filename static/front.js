@@ -1,4 +1,5 @@
-var socket = io.connect();
+/* eslint-env browser */
+var socket = io.connect()
 
 var controlState = {
   attitude: {
@@ -9,7 +10,7 @@ var controlState = {
   throttle: 0
 }
 
-gamepad(function(inputs){
+gamepad(function(inputs) {
   var newControlState = {
     attitude: {
       xR: inputs.axes[2],
@@ -24,16 +25,6 @@ gamepad(function(inputs){
   handleStateUpdate(newControlState);
 });
 
-// var calibrationMode = false;
-// function toggleCalibration(){
-  // calibrationMode = !calibrationMode;
-  // document.getElementById('calibrationMode').checked = calibrationMode;
-// }
-// document.getElementById('calibrationMode').checked = calibrationMode;
-
-// var flightMode = function(){
-  // return !calibrationMode;
-// }
 var setMode = function(name){
   var combo = name.split('-');
   var mode = {
