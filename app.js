@@ -2,10 +2,10 @@
 var app = require('express')()
 var server = require('http').Server(app)
 var io = require('socket.io')(server)
-var HTTP_PORT = 1337
+const HTTP_PORT = 1337
 
 // vehicle setup
-opts = {
+var opts = {
   motorMap: {
     // pwmChannel: {x, y, rotation}
     3: {y: 1, x: 1, rotation: 'cw'},
@@ -25,8 +25,8 @@ opts = {
   }
 }
 
-var copter = require('./lib/platforms/copter')
-var vehicle = new copter(opts)
+var Copter = require('./lib/platforms/copter')
+var vehicle = new Copter(opts)
 
 vehicle.on('error', function(msg) {
   console.log('VEHICLE ERROR: \n', msg)
