@@ -2,13 +2,20 @@
 var expect = require('chai').expect
 var sinon = require('sinon')
 
-var copter = require('../lib/platforms/copter')
+var Copter = require('../lib/platforms/copter')
 
 describe('vehicle state', function() {
-  it('is immutable')
+
+  it('is immutable', function(){
+    var vehicle = new Copter()
+    vehicle.vehicleState.getControlState = 'derp'
+    expect(vehicle.vehicleState.getControlState).to.not.equal('derp')
+  })
+
 })
 
 describe('control inputs', function() {
+
   it('sets CORRECT PWM values')
 
   it('sets PWM values', function() {
@@ -32,7 +39,7 @@ describe('control inputs', function() {
       }
     }
 
-    var vehicle = new copter(opts)
+    var vehicle = new Copter(opts)
 
     var spy = sinon.spy()
     vehicle.pwmControl = {
@@ -45,5 +52,6 @@ describe('control inputs', function() {
     })
 
     expect(spy.callCount).to.be.equal(4)
+
   })
 })
