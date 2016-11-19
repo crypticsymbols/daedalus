@@ -4,6 +4,11 @@ var server = require('http').Server(app)
 var io = require('socket.io')(server)
 const HTTP_PORT = 1337
 
+var n = require('node-navio')
+var a = n.ahrsData();
+a.from.on('position_sample', function(data){
+        console.log(data)
+})
 // vehicle setup
 var opts = {
   motorMap: {
