@@ -13,22 +13,22 @@ describe('controls', function() {
       expect(controls.getState()).to.eql(vals)
     })
 
-      var tFunc1 = function(v){
-        return v * 10
-      }
-      var tFunc2 = function(v) {
-        return v + 1
-      }
-      var axisFunc = function(v) {
-        return v * 3
-      }
+    var tFunc1 = (v) => {
+      return v * 10
+    }
+    var tFunc2 = (v) => {
+      return v + 1
+    }
+    var axisFunc = (v) => {
+      return v * 3
+    }
 
     it('inputs with a filter(s)', function() {
       let opts = {
-       inputFilters: {
-        'throttle': [tFunc1, tFunc2],
-        'attitude.xR': axisFunc
-       }
+        inputFilters: {
+          throttle: [tFunc1, tFunc2],
+          'attitude.xR': axisFunc
+        }
       }
       let controls = new Controls(opts)
       controls.setState({throttle: 7, attitude: {xR: 0.02}})
@@ -39,10 +39,10 @@ describe('controls', function() {
 
     it('outputs with a filter(s)', function() {
       let opts = {
-       outputFilters: {
-        'throttle': [tFunc1, tFunc2],
-        'attitude.xR': axisFunc
-       }
+        outputFilters: {
+          throttle: [tFunc1, tFunc2],
+          'attitude.xR': axisFunc
+        }
       }
       let controls = new Controls(opts)
       controls.setState({throttle: 7, attitude: {xR: 0.02}})
@@ -50,7 +50,7 @@ describe('controls', function() {
       expect(out.throttle).to.equal(71)
       expect(out.attitude.xR).to.equal(0.06)
     })
-    // it('outputs with a filter(s)')
+
   })
 
   it('has immutable control state data', function() {
@@ -67,8 +67,6 @@ describe('controls', function() {
     expect(out).not.to.eql(set)
     expect(controls.getState()).to.eql(set)
   })
-
-  it('validates inputs and will not break')
 
   it('calls a callback provided to setState with updated values', function() {
     let callback = sinon.spy()
