@@ -1,25 +1,21 @@
-# daedalus
+# daedalus.js
 
-Node.js fly-by-wire for Navio+
+Node.js fly-by-wire for Raspberry Pi/Navio+. This is pre-alpha, do NOT use this to control anything that is not tethered to the ground.
 
-# ABSOLUTELY DO NOT USE THIS AT ALL YET
-# YOU WILL PROBABLY DIE
-## (but I intend to open source this)
+The goal is to create an extensible autopilot system for any vehicle platform (quadcopters, aircraft, rovers, submarines...) that's easy to hack on.
 
-"You know what's easier than figuring out APM/ArduPilot? This." - Nobody
+If you're interested in contributing, please let me know and I'll help you get set up! I only have a quadcopter, so I'd love any input on implementing different platforms.
 
 ### To-Do:
-* Unit / Integration testing, now that I have a general idea of what this project even looks like
-* limit control inputs to percentages, so miscalibrated input devices won't kill you
-* Wrap more Navio drivers (PWM implemented, but no sensors)
-* Frontend (Angular? React?)
-* Figure out what kind of error/exception/"oh shit" handling or fail safes should exist
-* Get camera running and streaming over network (uv4l seems fastest and easiest)
-* input filters - exponent/elliptical response maps for inputs
+* Flesh out stubbed tests, add more
+* Implement AHRS interface and stabilization mode
+* Elliptical response input converstion (more sensitive towards limits)
+* Camera interface such that handlers can be extended to other devices (gimbals, cargo drop, etc)
+* Untethered flight testing!
+* Navigation handlers: actions (hold / change 1 to 3 axes, platform specific handling of each desired state)
+* Longer range connectivity - high gain wifi/4G, xBee if bandwidth can handle video?
+* Fail-safe modes
 * Recruit interested people who want to help! Hex/Octo/Y copter? Heli? Fixed Wing? I'm trying to keep the broad view but I only have a quad to work with.
-* Implement layers towards automated operation: self-knowledge (sensor access), platform-level knowledge of how to perform certain tasks (pitch, roll, yaw, climb, land, go to point...), mode-level (stabilized, manual, auto, waypoint) logic for instructing platform to perform those tasks
-* Better connectivity (4G modem, antenna tracker)
-
 
     NEW XYZ SYSTEM NOTES
 
@@ -36,13 +32,6 @@ Node.js fly-by-wire for Navio+
     Rotation in the XY plane i.e. rotation around the +Z axis represents positive yaw, i.e. clockwise as seen from the top of the craft, looking in the +Z direction.
     Rotation in the YZ plane i.e. rotation around the +X axis represents positive roll, i.e. clockwise as seen from behind the craft, looking forward along +X direction.
     Rotation in the ZX plane i.e. rotation around the +Y axis represents positive pitch, i.e. nose up, i.e. clockwise as seen when looking along +Y direction.
-
-
-X/Y Notes
-X - up/down, + is up
-Y- left/right, + is right
-Xmoment: + is pitch up, - is pitch down
-YMoment - + is roll left (right up), - is roll left (left up)
 
 Platform / mode action notes
 
