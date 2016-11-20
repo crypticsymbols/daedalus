@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "chai": "^3.5.0",
+    "deap": "^1.0.0",
     "dot-object": "^1.5.4",
     "express": "^4.14.0",
     "mocha": "^3.1.2",

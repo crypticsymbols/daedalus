@@ -33,7 +33,7 @@ describe('modes', function() {
   it('returns true on successful mode switch', function() {
     let mh = makeHandler()
     expect(mh.getMode().constructor.name).to.eql('Calibrate')
-    expect(mh.setMode({name: 'manual', opts: {}})).to.eql(true)
+    expect(mh.setMode({name: 'manual', options: {}})).to.eql(true)
     expect(mh.getMode().constructor.name).to.eql('Manual')
   })
 
@@ -44,7 +44,19 @@ describe('modes', function() {
     expect(mh.getMode().constructor.name).to.equal('Calibrate')
   })
 
-  it('updates and persists options')
+  it('updates and persists options', function() {
+    let mh = makeHandler()
+    let calOpts = mh.getMode().getOptions()
+    expect(calOpts).to.eql({min: 1100, mid: 1500, max: 1900})
+    mh.setMode({name: 'calibrate', options: {min: 900}})
+    expect(mh.getMode().getOptions()).to.eql({min: 900, mid: 1500, max: 1900})
+    expect(mh.setMode({name: 'manual'})).to.equal(true)
+    mh.setMode({name: 'manual', options: {foo: 'bar', min: 7}})
+    expect(mh.getMode().getOptions()).to.eql({foo: 'bar', min: 7})
+    expect(mh.setMode({name: 'calibrate'})).to.eql(true)
+    expect(mh.getMode().getOptions()).to.eql({min: 900, mid: 1500, max: 1900})
+  })
+
   it('has a heartbeat function')
   it('remembers the last config when switching back to a previous mode')
   it('initializes with default config from default mode')
