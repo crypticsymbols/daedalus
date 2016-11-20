@@ -28,13 +28,13 @@ var opts = {
   },
   inputFilters: {
     throttle: [
+      (value) => {
+        return math.ellipticalScale(value)
+      },
       (value, opts) => {
         let min = opts.throttle.min
         let max = opts.throttle.max
         return util.scalePercentageToValue(value, min, max)
-      },
-      (value) => {
-        return math.ellipticalScale(value)
       }
     ]
   }
