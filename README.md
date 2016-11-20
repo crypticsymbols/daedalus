@@ -12,6 +12,7 @@ If you're interested in contributing, please let me know and I'll help you get s
 * Remove output filters on controls
 * combo filter (i.e. attitude axes) handling
 * abstract filters to their own class
+* Camera module
 * Implement AHRS interface and stabilization mode
 * Elliptical response input converstion (more sensitive towards limits)
 * Camera interface such that handlers can be extended to other devices (gimbals, cargo drop, etc)

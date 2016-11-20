@@ -5,6 +5,7 @@ var server = require('http').Server(app)
 var io = require('socket.io')(server)
 const HTTP_PORT = 1337
 
+var vehicle = require('./vehicleConfig')
 // vehicle setup
 var math = require('./lib/util/math')
 var util = require('./lib/util/shared')
@@ -38,10 +39,6 @@ var opts = {
       }
     ]
   }
-    // let eScaled = math.ellipticalScale(throttleValue)
-    // var min = opts.throttle.min
-    // var max = opts.throttle.max
-    // return utils.scalePercentageToValue(eScaled, min, max)
 }
 
 var Copter = require('./lib/platforms/copter')
