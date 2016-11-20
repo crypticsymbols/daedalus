@@ -5,6 +5,11 @@ var sinon = require('sinon')
 
 describe('controls', function() {
 
+  describe('control defaults and shape', function() {
+    it('provides default control values')
+    it('validates inputs with control map')
+  })
+
   describe('input / output filters', function() {
     it('inputs/outputs with no filter', function() {
       let controls = new Controls()

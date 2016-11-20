@@ -4,6 +4,8 @@ var sinon = require('sinon')
 
 var Copter = require('../lib/platforms/copter')
 
+it('has a kill switch and/or arming mechanism')
+
 describe('vehicle state', function() {
 
   it('is immutable', function(){
@@ -15,8 +17,6 @@ describe('vehicle state', function() {
 })
 
 describe('control inputs', function() {
-
-  it('sets CORRECT PWM values')
 
   it('sets PWM values', function() {
     var opts = {
