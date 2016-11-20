@@ -59,7 +59,6 @@ describe('modes', function() {
 
   it('options are immutable')
   it('has a heartbeat function')
-  it('remembers the last config when switching back to a previous mode')
   it('initializes with default config from default mode')
   it('reverts on mode switch if any errors')
 })

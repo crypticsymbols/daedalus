@@ -1,3 +1,4 @@
+'use strict'
 // App specific config
 var app = require('express')()
 var server = require('http').Server(app)
@@ -5,6 +6,8 @@ var io = require('socket.io')(server)
 const HTTP_PORT = 1337
 
 // vehicle setup
+var math = require('./lib/util/math')
+var util = require('./lib/util/shared')
 var opts = {
   motorMap: {
     // pwmChannel: {x, y, rotation}
@@ -22,7 +25,23 @@ var opts = {
     xR: 1,
     yR: 1,
     zR: 1
+  },
+  inputFilters: {
+    throttle: [
+      (value, opts) => {
+        let min = opts.throttle.min
+        let max = opts.throttle.max
+        return util.scalePercentageToValue(value, min, max)
+      },
+      (value) => {
+        return math.ellipticalScale(value)
+      }
+    ]
   }
+    // let eScaled = math.ellipticalScale(throttleValue)
+    // var min = opts.throttle.min
+    // var max = opts.throttle.max
+    // return utils.scalePercentageToValue(eScaled, min, max)
 }
 
 var Copter = require('./lib/platforms/copter')
