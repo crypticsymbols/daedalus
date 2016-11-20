@@ -44,7 +44,7 @@ describe('modes', function() {
     expect(mh.getMode().constructor.name).to.equal('Calibrate')
   })
 
-  it('updates and persists options', function() {
+  it('updates and persists options across mode changes', function() {
     let mh = makeHandler()
     let calOpts = mh.getMode().getOptions()
     expect(calOpts).to.eql({min: 1100, mid: 1500, max: 1900})
@@ -57,6 +57,7 @@ describe('modes', function() {
     expect(mh.getMode().getOptions()).to.eql({min: 900, mid: 1500, max: 1900})
   })
 
+  it('options are immutable')
   it('has a heartbeat function')
   it('remembers the last config when switching back to a previous mode')
   it('initializes with default config from default mode')
