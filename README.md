@@ -18,6 +18,8 @@ If you're interested in contributing, please let me know and I'll help you get s
 * Camera interface such that handlers can be extended to other devices (gimbals, cargo drop, etc)
 * Untethered flight testing!
 * Navigation handlers: actions (hold / change 1 to 3 axes, platform specific handling of each desired state)
+* Abstract components...
+  * Control = Component, like camera? Everything gets a control handler and namespace our vehicle commands to component?
 * Longer range connectivity - high gain wifi/4G, xBee if bandwidth can handle video?
 * Fail-safe modes
 * Recruit interested people who want to help! Hex/Octo/Y copter? Heli? Fixed Wing? I'm trying to keep the broad view but I only have a quad to work with.
@@ -75,4 +77,19 @@ nvm install 5.11
 git clone https://github.com/crypticsymbols/daedalus.git
 cd daedalus
 npm install --production
+
+++++++++++++++++++++++++++++++++++++++++
+
+Flight commands -> vehicle movement controller
+~~~ i.e. ~~~
+namespaced commands -> component controller
+
+Mode handlers could exist for components like camera too
+-- ex. "follow me" mode
+
+movement controllers
+- 6 axes
+-- "powered lift", "fixed wing", "rover", etc
+
+Control modes (manual, stabilize & trim full), vs Navigaton (go to point, hold axis, etc) modes?
 

@@ -5,7 +5,9 @@ var server = require('http').Server(app)
 var io = require('socket.io')(server)
 const HTTP_PORT = 1337
 
-var vehicle = require('./vehicleConfig')
+var vehicle = require('./vehicleConfig').vehicle
+
+var opts = require('./vehicleConfig').opts
 
 vehicle.on('error', function(msg) {
   console.log('VEHICLE ERROR: \n', msg)

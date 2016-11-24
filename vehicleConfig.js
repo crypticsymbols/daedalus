@@ -1,4 +1,7 @@
 'use strict'
+
+module.exports = {}
+
 var Copter = require('./lib/platforms/copter')
 // vehicle setup
 var math = require('./lib/util/math')
@@ -35,7 +38,6 @@ var opts = {
   }
 }
 
-var vehicle = new Copter(opts)
+module.exports.vehicle = new Copter(opts)
 
-module.exports = vehicle
-
+module.exports.opts = opts
