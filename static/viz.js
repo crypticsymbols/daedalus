@@ -114,7 +114,7 @@ var inputViz = function(element, config, mode){
       }
       if (values && values.imu) {
         var v = values.imu
-        accelPlane.rotation.x = -v.ax/10
+        accelPlane.rotation.x = v.ax/10
         accelPlane.rotation.y = v.ay/10
         gyroPlane.rotation.x = v.gy
         gyroPlane.rotation.y = v.gx
