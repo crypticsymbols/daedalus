@@ -8,19 +8,21 @@ If you're interested in contributing, please let me know and I'll help you get s
 
 ### To-Do:
 * Flesh out stubbed tests, add more
-* make vehicleConfig.js file
 * Remove output filters on controls
-* combo filter (i.e. attitude axes) handling
-* abstract filters to their own class
-* Camera module
-* Implement AHRS interface and stabilization mode
-* Elliptical response input converstion (more sensitive towards limits)
+* De-tune attitude axes by 10x?
+* AHRS - map axes to vehicle XYZ
+* Rough altitude sensing
+* Modes!
+* - make stabilize hold level
+* - Start "sport" mode
 * Camera interface such that handlers can be extended to other devices (gimbals, cargo drop, etc)
+* Camera module
 * Untethered flight testing!
 * Navigation handlers: actions (hold / change 1 to 3 axes, platform specific handling of each desired state)
 * Abstract components...
   * Control = Component, like camera? Everything gets a control handler and namespace our vehicle commands to component?
 * Longer range connectivity - high gain wifi/4G, xBee if bandwidth can handle video?
+* abstract filters to their own class
 * Fail-safe modes
 * Recruit interested people who want to help! Hex/Octo/Y copter? Heli? Fixed Wing? I'm trying to keep the broad view but I only have a quad to work with.
 
