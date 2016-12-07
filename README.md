@@ -9,8 +9,8 @@ If you're interested in contributing, please let me know and I'll help you get s
 ### To-Do:
 * Flesh out stubbed tests, add more
 * Remove output filters on controls
-* De-tune attitude axes by 10x?
-* AHRS - map axes to vehicle XYZ
+* De-tune attitude axes - 10x?
+* AHRS - remap axes to vehicle XYZ, decide on reference frame
 * Rough altitude sensing
 * Modes!
 * - make stabilize hold level
